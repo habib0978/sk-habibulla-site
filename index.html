@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SK HABIBULLA</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
@@ -27,11 +27,15 @@ body{
     color:#7dd3fc;
 }
 
+/* MATRIX BG */
+
 canvas{
     position:fixed;
     inset:0;
     z-index:1;
 }
+
+/* CONTAINER */
 
 .container{
     position:relative;
@@ -42,6 +46,8 @@ canvas{
     align-items:flex-start;
     padding:40px 20px;
 }
+
+/* CARD */
 
 .cyber-card{
     width:100%;
@@ -55,6 +61,8 @@ canvas{
     0 0 20px rgba(125,211,252,0.15),
     0 0 60px rgba(59,130,246,0.12);
 }
+
+/* TOP */
 
 .terminal-top{
     background:#0b1220;
@@ -85,6 +93,8 @@ canvas{
     color:#7dd3fc;
     letter-spacing:1px;
 }
+
+/* BODY */
 
 .card-body{
     padding:35px 28px;
@@ -133,6 +143,8 @@ h1{
     color:#cbd5e1;
 }
 
+/* INFO */
+
 .info-box{
     margin-top:22px;
     background:rgba(255,255,255,0.03);
@@ -150,26 +162,36 @@ h1{
     color:#7dd3fc;
 }
 
-.links{
-    margin-top:30px;
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+/* INPUT */
+
+input{
+    width:100%;
+    padding:15px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:#0f172a;
+    color:#7dd3fc;
+    margin-bottom:15px;
+    font-family:'Fira Code', monospace;
 }
 
+/* BUTTON */
+
 .cyber-btn{
+    width:100%;
     text-decoration:none;
     color:#7dd3fc;
     border:1px solid rgba(125,211,252,0.25);
     padding:16px;
     border-radius:14px;
     text-align:center;
-    position:relative;
     overflow:hidden;
     transition:0.4s;
     font-weight:bold;
     letter-spacing:1px;
     background:rgba(125,211,252,0.04);
+    cursor:pointer;
 }
 
 .cyber-btn:hover{
@@ -178,6 +200,17 @@ h1{
     color:#06121f;
     box-shadow:0 0 25px rgba(56,189,248,0.4);
 }
+
+/* LINKS */
+
+.links{
+    margin-top:30px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+/* FOOTER */
 
 .hacking-text{
     margin-top:35px;
@@ -198,6 +231,8 @@ h1{
     }
 }
 
+/* MUSIC */
+
 .music-btn{
     position:fixed;
     top:20px;
@@ -217,17 +252,7 @@ h1{
     color:#06121f;
 }
 
-input{
-    width:100%;
-    padding:15px;
-    border:none;
-    outline:none;
-    border-radius:12px;
-    background:#0f172a;
-    color:#7dd3fc;
-    margin-bottom:15px;
-    font-family:'Fira Code', monospace;
-}
+/* MOBILE */
 
 @media(max-width:600px){
 
@@ -256,8 +281,10 @@ input{
 
 <body>
 
+<!-- MATRIX -->
 <canvas id="matrix"></canvas>
 
+<!-- MUSIC -->
 <audio id="bgMusic" loop>
 <source src="https://files.catbox.moe/n1twgo.mp4" type="audio/mp4">
 </audio>
@@ -266,10 +293,12 @@ input{
 ▶ MUSIC
 </button>
 
+<!-- MAIN -->
 <div class="container">
 
 <div class="cyber-card">
 
+<!-- TOP -->
 <div class="terminal-top">
 
 <div class="dots">
@@ -284,8 +313,10 @@ habibulla.dev
 
 </div>
 
+<!-- BODY -->
 <div class="card-body">
 
+<!-- PROFILE -->
 <div class="profile">
 
 <div class="avatar-box">
@@ -300,9 +331,9 @@ WEB DESIGNER • CONTENT CREATOR
 
 </div>
 
-<!-- HABIB DOWNLOADER -->
+<!-- DOWNLOADER -->
 
-<div class="info-box" style="margin-bottom:25px;">
+<div class="info-box">
 
 <h2 style="
 text-align:center;
@@ -333,7 +364,6 @@ placeholder="Paste Video URL Here"
 <button 
 onclick="downloadVideo()" 
 class="cyber-btn"
-style="width:100%;cursor:pointer;"
 >
 DOWNLOAD NOW
 </button>
@@ -351,6 +381,8 @@ READY...
 </p>
 
 </div>
+
+<!-- INFO -->
 
 <div class="info-box">
 
@@ -376,6 +408,8 @@ READY...
 
 </div>
 
+<!-- CLOCK -->
+
 <div class="info-box">
 
 <p>
@@ -394,6 +428,8 @@ READY...
 </p>
 
 </div>
+
+<!-- SOCIAL -->
 
 <div class="links">
 
@@ -415,6 +451,8 @@ EMAIL
 
 </div>
 
+<!-- FOOTER -->
+
 <div class="hacking-text">
 WELCOME TO MY PERSONAL PROFILE
 <span class="cursor">█</span>
@@ -426,12 +464,16 @@ WELCOME TO MY PERSONAL PROFILE
 
 <script>
 
+/* MATRIX */
+
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
 function resizeCanvas(){
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
 }
 
 resizeCanvas();
@@ -446,12 +488,14 @@ let drops = [];
 
 function initDrops(){
 
-columns = canvas.width / fontSize;
-drops = [];
+    columns = canvas.width / fontSize;
+    drops = [];
 
-for(let x = 0; x < columns; x++){
-drops[x] = 1;
-}
+    for(let x = 0; x < columns; x++){
+
+        drops[x] = 1;
+
+    }
 
 }
 
@@ -461,33 +505,35 @@ window.addEventListener("resize", initDrops);
 
 function draw(){
 
-ctx.fillStyle = "rgba(0,0,0,0.15)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "rgba(0,0,0,0.15)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle = "#38bdf8";
-ctx.font = fontSize + "px monospace";
+    ctx.fillStyle = "#38bdf8";
+    ctx.font = fontSize + "px monospace";
 
-for(let i = 0; i < drops.length; i++){
+    for(let i = 0; i < drops.length; i++){
 
-const text =
-letters[Math.floor(Math.random() * letters.length)];
+        const text =
+        letters[Math.floor(Math.random() * letters.length)];
 
-ctx.fillText(
-text,
-i * fontSize,
-drops[i] * fontSize
-);
+        ctx.fillText(
+            text,
+            i * fontSize,
+            drops[i] * fontSize
+        );
 
-if(
-drops[i] * fontSize > canvas.height &&
-Math.random() > 0.975
-){
-drops[i] = 0;
-}
+        if(
+            drops[i] * fontSize > canvas.height &&
+            Math.random() > 0.975
+        ){
 
-drops[i]++;
+            drops[i] = 0;
 
-}
+        }
+
+        drops[i]++;
+
+    }
 
 }
 
@@ -499,11 +545,15 @@ const music = document.getElementById("bgMusic");
 
 function toggleMusic(){
 
-if(music.paused){
-music.play();
-}else{
-music.pause();
-}
+    if(music.paused){
+
+        music.play();
+
+    }else{
+
+        music.pause();
+
+    }
 
 }
 
@@ -511,26 +561,26 @@ music.pause();
 
 function updateClock(){
 
-const now = new Date();
+    const now = new Date();
 
-const days = [
-"Sunday",
-"Monday",
-"Tuesday",
-"Wednesday",
-"Thursday",
-"Friday",
-"Saturday"
-];
+    const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
 
-document.getElementById("date").innerHTML =
-now.toLocaleDateString();
+    document.getElementById("date").innerHTML =
+    now.toLocaleDateString();
 
-document.getElementById("time").innerHTML =
-now.toLocaleTimeString();
+    document.getElementById("time").innerHTML =
+    now.toLocaleTimeString();
 
-document.getElementById("day").innerHTML =
-days[now.getDay()];
+    document.getElementById("day").innerHTML =
+    days[now.getDay()];
 
 }
 
@@ -542,41 +592,106 @@ updateClock();
 
 async function downloadVideo(){
 
-const url =
-document.getElementById("videoUrl").value;
+    const url =
+    document.getElementById("videoUrl").value.trim();
 
-const status =
-document.getElementById("downloadStatus");
+    const status =
+    document.getElementById("downloadStatus");
 
-if(!url){
+    if(!url){
 
-status.innerHTML =
-"PLEASE ENTER URL";
+        status.innerHTML =
+        "PLEASE ENTER URL";
 
-return;
+        return;
+    }
 
-}
+    status.innerHTML =
+    "CONNECTING...";
 
-status.innerHTML =
-"PROCESSING...";
+    try{
 
-try{
+        let downloadLink = "";
 
-const api =
-"https://api.vevioz.com/api/button/mp4?url=" +
-encodeURIComponent(url);
+        /* YOUTUBE */
 
-window.open(api, "_blank");
+        if(
+            url.includes("youtube.com") ||
+            url.includes("youtu.be")
+        ){
 
-status.innerHTML =
-"DOWNLOAD STARTED";
+            if(url.includes("youtu.be/")){
 
-}catch(err){
+                const id =
+                url.split("youtu.be/")[1].split("?")[0];
 
-status.innerHTML =
-"FAILED TO DOWNLOAD";
+                downloadLink =
+                "https://ssyoutube.com/watch?v=" + id;
 
-}
+            }
+
+            else if(url.includes("v=")){
+
+                const id =
+                url.split("v=")[1].split("&")[0];
+
+                downloadLink =
+                "https://ssyoutube.com/watch?v=" + id;
+
+            }
+
+            else{
+
+                downloadLink =
+                "https://ssyoutube.com/";
+
+            }
+
+        }
+
+        /* FACEBOOK */
+
+        else if(
+            url.includes("facebook.com")
+        ){
+
+            downloadLink =
+            "https://fdown.net/";
+
+        }
+
+        /* INSTAGRAM */
+
+        else if(
+            url.includes("instagram.com")
+        ){
+
+            downloadLink =
+            "https://snapinsta.app/";
+
+        }
+
+        else{
+
+            status.innerHTML =
+            "UNSUPPORTED LINK";
+
+            return;
+        }
+
+        window.open(downloadLink,"_blank");
+
+        status.innerHTML =
+        "DOWNLOAD PAGE OPENED";
+
+    }
+
+    catch(err){
+
+        status.innerHTML =
+        "FAILED";
+
+    }
 
 }
 

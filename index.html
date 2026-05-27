@@ -581,26 +581,35 @@ async function downloadVideo(){
     status.innerHTML = "FETCHING VIDEO...";
 
     try {
-        // একটি স্থিতিশীল এবং সম্পূর্ণ ফ্রি অল-ইন-ওয়ান সোশ্যাল মিডিয়া ডাউনলোডার API ব্যবহার করা হয়েছে
-        const response = await fetch(`https://api.vkrdown.com/api/api.php?url=${encodeURIComponent(url)}`);
+        // এখানে Blackhole অ্যাপের ডেডিকেটেড হাই-স্পিড API ব্যবহার করা হয়েছে
+        const response = await fetch("https://blackhole.sh/api/cobalt", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                url: url,
+                videoQuality: "720",
+                audioMute: false
+            })
+        });
+
         const data = await response.json();
 
-        // ডেটা স্ট্রাকচার চেক করে সঠিক ডাউনলোড লিঙ্ক বের করা হচ্ছে
-        if (data && data.data && data.data.downloads && data.data.downloads.length > 0) {
+        // সাকসেসফুল রেসপন্স চেক করে রিডাইরেক্ট করা হচ্ছে
+        if (data && data.url) {
             status.innerHTML = "DOWNLOAD STARTED";
-            
-            // সবচেয়ে হাই কোয়ালিটির ভিডিও লিংকটি খুঁজে বের করা হচ্ছে
-            const downloadUrl = data.data.downloads[0].url;
-            
-            // ডাউনলোড ট্রিগার করা হচ্ছে
-            window.open(downloadUrl, '_blank');
+            window.open(data.url, '_blank');
+        } else if (data && data.text) {
+            status.innerHTML = "ERROR: " + data.text;
         } else {
-            status.innerHTML = "FAILED TO FETCH VIDEO / INVALID LINK";
+            status.innerHTML = "FAILED TO FETCH VIDEO";
         }
 
     } catch(error) {
         console.error(error);
-        status.innerHTML = "ERROR: TRY AGAIN LATER";
+        status.innerHTML = "SERVER ERROR (CORS / BYPASSED)";
     }
 }
 

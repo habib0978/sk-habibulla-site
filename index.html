@@ -1,594 +1,585 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SK HABIBULLA // Cyber Core</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SK HABIBULLA</title>
 
-        body {
-            background-color: #020205;
-            color: #00f0ff;
-            font-family: 'Fira Code', monospace;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
-        /* Matrix Rain effect with a soft tone */
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0.12;
-            pointer-events: none;
-        }
+<style>
 
-        /* Premium Aesthetic Aurora Glows */
-        .glow-1 {
-            position: fixed;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(255, 0, 128, 0.3) 0%, transparent 70%);
-            top: -100px;
-            right: -100px;
-            z-index: 1;
-            filter: blur(60px);
-            animation: floatingGlow 10s infinite alternate;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .glow-2 {
-            position: fixed;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(141, 0, 255, 0.25) 0%, transparent 70%);
-            bottom: -100px;
-            left: -100px;
-            z-index: 1;
-            filter: blur(60px);
-            animation: floatingGlow 8s infinite alternate-reverse;
-        }
+html{
+    scroll-behavior:smooth;
+}
 
-        @keyframes floatingGlow {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 20px) scale(1.15); }
-        }
+body{
+    background:linear-gradient(135deg,#050816,#0a1022);
+    overflow-y:auto;
+    overflow-x:hidden;
+    font-family:'Fira Code', monospace;
+    color:#7dd3fc;
+}
 
-        /* Cyber Music Player Controller Widget */
-        .music-widget {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            z-index: 10;
-            background: rgba(10, 10, 25, 0.75);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            padding: 8px 15px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-            transition: all 0.3s ease;
-        }
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:1;
+}
 
-        .music-widget:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
-            border-color: #ff007f;
-        }
+.container{
+    position:relative;
+    z-index:5;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:40px 20px;
+}
 
-        .music-icon {
-            font-size: 14px;
-            color: #00f0ff;
-            animation: spin 3s linear infinite;
-        }
+.cyber-card{
+    width:100%;
+    max-width:520px;
+    background:rgba(10,15,30,0.72);
+    border:1px solid rgba(125,211,252,0.25);
+    border-radius:24px;
+    overflow:hidden;
+    backdrop-filter:blur(14px);
+    box-shadow:
+    0 0 20px rgba(125,211,252,0.15),
+    0 0 60px rgba(59,130,246,0.12);
+}
 
-        .music-widget.paused .music-icon {
-            animation-play-state: paused;
-            color: #555;
-        }
+.terminal-top{
+    background:#0b1220;
+    padding:16px;
+    border-bottom:1px solid rgba(125,211,252,0.2);
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
+.dots{
+    display:flex;
+    gap:8px;
+}
 
-        .music-text {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-        }
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+}
 
-        /* Hidden Video Element for Force Autoplay Bypass */
-        #bg-video {
-            display: none;
-        }
+.red{background:#ef4444;}
+.yellow{background:#facc15;}
+.green{background:#22c55e;}
 
-        .container {
-            position: relative;
-            z-index: 2;
-            width: 92%;
-            max-width: 520px;
-            margin: 60px auto;
-        }
+.terminal-title{
+    font-size:12px;
+    color:#7dd3fc;
+    letter-spacing:1px;
+}
 
-        /* Ultra Premium Glassmorphic Card */
-        .hacker-card {
-            background: rgba(10, 10, 25, 0.55);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-radius: 30px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 
-                        inset 0 0 30px rgba(255, 0, 128, 0.05),
-                        inset 0 0 15px rgba(0, 240, 255, 0.05);
-            overflow: hidden;
-        }
+.card-body{
+    padding:35px 28px;
+}
 
-        /* Top Header Terminal Bar */
-        .terminal-header {
-            background: rgba(12, 12, 28, 0.85);
-            padding: 18px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+.profile{
+    text-align:center;
+    margin-bottom:30px;
+}
 
-        .buttons-container {
-            display: flex;
-            gap: 8px;
-        }
+.avatar-box{
+    width:150px;
+    height:150px;
+    margin:auto;
+    border-radius:50%;
+    padding:4px;
+    background:linear-gradient(45deg,#38bdf8,#7dd3fc,#0ea5e9);
+    box-shadow:0 0 30px rgba(125,211,252,0.25);
+}
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            position: relative;
-        }
-        .dot::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 50%;
-            box-shadow: 0 0 8px currentColor;
-            opacity: 0.8;
-        }
-        .dot.red { background: #ff5f56; color: #ff5f56; }
-        .dot.yellow { background: #ffbd2e; color: #ffbd2e; }
-        .dot.green { background: #00ffaa; color: #00ffaa; }
+.avatar{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #0f172a;
+}
 
-        .terminal-title {
-            color: rgba(255, 255, 255, 0.45);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.8px;
-        }
+h1{
+    margin-top:22px;
+    font-size:30px;
+    font-family:'Orbitron', sans-serif;
+    color:#7dd3fc;
+    text-shadow:0 0 12px rgba(125,211,252,0.4);
+}
 
-        .card-body {
-            padding: 40px 30px;
-        }
+.tag{
+    display:inline-block;
+    margin-top:12px;
+    border:1px solid rgba(125,211,252,0.25);
+    padding:8px 18px;
+    font-size:11px;
+    letter-spacing:3px;
+    border-radius:40px;
+    background:rgba(125,211,252,0.06);
+    color:#cbd5e1;
+}
 
-        /* Profile Layout & Smooth RGB Ring */
-        .profile-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 25px;
-        }
+.info-box{
+    margin-top:22px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(125,211,252,0.15);
+    padding:22px;
+    border-radius:18px;
+    line-height:2;
+}
 
-        .profile-pic-container {
-            position: relative;
-            width: 145px;
-            height: 145px;
-            padding: 6px;
-            border-radius: 50%;
-            margin-bottom: 22px;
-            background: linear-gradient(135deg, #00f0ff, #ff007f, #8d00ff, #00f0ff);
-            background-size: 300% 300%;
-            box-shadow: 0 0 30px rgba(255, 0, 127, 0.3);
-            animation: gradientMove 6s ease infinite;
-        }
+.label{
+    color:#ffffff;
+}
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+.highlight{
+    color:#7dd3fc;
+}
 
-        .profile-pic {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #0a0a19;
-            display: block;
-        }
+.links{
+    margin-top:30px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
 
-        /* Gorgeous Metallic Gradient Text */
-        .profile-wrapper h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 34px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            background: linear-gradient(to bottom, #ffffff 40%, #e0e0ff 60%, #00f0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 12px rgba(0, 240, 255, 0.35));
-        }
+.cyber-btn{
+    text-decoration:none;
+    color:#7dd3fc;
+    border:1px solid rgba(125,211,252,0.25);
+    padding:16px;
+    border-radius:14px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    transition:0.4s;
+    font-weight:bold;
+    letter-spacing:1px;
+    background:rgba(125,211,252,0.04);
+}
 
-        .status-tag {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 5px 18px;
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 127, 0.1));
-            font-size: 11px;
-            font-weight: 600;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            letter-spacing: 2px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+.cyber-btn:hover{
+    transform:translateY(-4px);
+    background:#38bdf8;
+    color:#06121f;
+    box-shadow:0 0 25px rgba(56,189,248,0.4);
+}
 
-        /* Interactive Cyber Like Button */
-        .like-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
+.hacking-text{
+    margin-top:35px;
+    font-size:12px;
+    color:#cbd5e1;
+    text-align:center;
+    opacity:0.9;
+    letter-spacing:2px;
+}
 
-        .like-btn {
-            background: rgba(255, 0, 127, 0.1);
-            border: 1px solid rgba(255, 0, 127, 0.4);
-            color: #ff007f;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 10px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.1);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+.cursor{
+    animation:blink 1s infinite;
+}
 
-        .like-btn:hover {
-            transform: scale(1.08);
-            background: rgba(255, 0, 127, 0.2);
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
-            border-color: #ff007f;
-        }
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
 
-        .like-btn:active {
-            transform: scale(0.95);
-        }
+.music-btn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:10;
+    background:#0f172a;
+    border:1px solid rgba(125,211,252,0.25);
+    color:#7dd3fc;
+    padding:12px 18px;
+    border-radius:50px;
+    cursor:pointer;
+    transition:0.3s;
+}
 
-        .like-icon {
-            font-size: 16px;
-            transition: transform 0.2s ease;
-        }
+.music-btn:hover{
+    background:#38bdf8;
+    color:#06121f;
+}
 
-        .like-btn:hover .like-icon {
-            animation: heartBeat 0.6s infinite alternate;
-        }
+input{
+    width:100%;
+    padding:15px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:#0f172a;
+    color:#7dd3fc;
+    margin-bottom:15px;
+    font-family:'Fira Code', monospace;
+}
 
-        @keyframes heartBeat {
-            to { transform: scale(1.3); }
-        }
+@media(max-width:600px){
 
-        .like-count {
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
+    .container{
+        padding-top:80px;
+        padding-bottom:40px;
+    }
 
-        /* Beautiful Semi-transparent Data Box */
-        .data-box {
-            background: rgba(5, 5, 15, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 24px;
-            border-radius: 20px;
-            line-height: 1.9;
-            font-size: 13.5px;
-            margin-bottom: 35px;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
-        }
+    .card-body{
+        padding:24px 18px;
+    }
 
-        .accent {
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: bold;
-        }
+    h1{
+        font-size:24px;
+    }
 
-        .cyan-text { color: #00f0ff; text-shadow: 0 0 8px rgba(0,240,255,0.3); }
-        .pink-text { color: #ff007f; text-shadow: 0 0 8px rgba(255,0,127,0.3); }
-        .purple-text { color: #b64fff; text-shadow: 0 0 8px rgba(182,79,255,0.3); }
+    .avatar-box{
+        width:120px;
+        height:120px;
+    }
 
-        /* Sleek & Luxury Animated Buttons */
-        .social-links {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
+}
 
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            border-radius: 16px;
-            text-decoration: none;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            font-size: 14.5px;
-            letter-spacing: 0.8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-btn:hover {
-            transform: translateY(-4px);
-        }
-
-        .btn-fb {
-            background: rgba(24, 119, 242, 0.05);
-            border: 1px solid rgba(24, 119, 242, 0.35);
-            color: #1877f2;
-        }
-        .btn-fb:hover {
-            background: linear-gradient(135deg, #1877f2, #3b5998);
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 10px 25px rgba(24, 119, 242, 0.45);
-        }
-
-        .btn-msg {
-            background: rgba(255, 0, 127, 0.05);
-            border: 1px solid rgba(255, 0, 127, 0.35);
-            color: #ff007f;
-        }
-        .btn-msg:hover {
-            background: linear-gradient(135deg, #ff007f, #8d00ff);
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 10px 25px rgba(255, 0, 127, 0.45);
-        }
-
-        .btn-wa {
-            background: rgba(37, 211, 102, 0.05);
-            border: 1px solid rgba(37, 211, 102, 0.35);
-            color: #25d366;
-        }
-        .btn-wa:hover {
-            background: linear-gradient(135deg, #25d366, #128c7e);
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45);
-        }
-
-        .btn-mail {
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.35);
-            color: #00f0ff;
-        }
-        .btn-mail:hover {
-            background: linear-gradient(135deg, #00f0ff, #0080ff);
-            color: #020205;
-            border-color: transparent;
-            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.45);
-        }
-
-        .footer-text {
-            margin-top: 40px;
-            font-size: 11px;
-            opacity: 0.4;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-
-        .cursor {
-            color: #ff007f;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
-    </style>
+</style>
 </head>
+
 <body>
 
-<div class="glow-1"></div>
-<div class="glow-2"></div>
 <canvas id="matrix"></canvas>
 
-<video id="bg-video" loop autoplay muted playsinline>
-    <source src="https://files.catbox.moe/n1twgo.mp4" type="video/mp4">
-</video>
+<audio id="bgMusic" loop>
+<source src="https://files.catbox.moe/n1twgo.mp4" type="audio/mp4">
+</audio>
 
-<div class="music-widget paused" id="music-trigger" onclick="toggleMusic(event)">
-    <span class="music-icon">🎵</span>
-    <span class="music-text" id="status-text">AUDIO: OFF</span>
-</div>
+<button class="music-btn" onclick="toggleMusic()">
+▶ MUSIC
+</button>
 
 <div class="container">
-    <div class="hacker-card">
-        <div class="terminal-header">
-            <div class="buttons-container">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-            </div>
-            <div class="terminal-title">core@habibulla:~</div>
-        </div>
 
-        <div class="card-body">
-            <div class="profile-wrapper">
-                <div class="profile-pic-container">
-                    <img src="https://i.imgur.com/DSqgcku.jpeg" alt="SK HABIBULLA" class="profile-pic">
-                </div>
-                <h1>SK HABIBULLA</h1>
-                <div class="status-tag">CYBER CORE DEVELOPER</div>
-            </div>
+<div class="cyber-card">
 
-            <div class="like-container">
-                <button class="like-btn" onclick="handleLikeClick(event)">
-                    <span class="like-icon">❤️</span>
-                    <span>Like</span>
-                    <span class="like-count" id="like-counter">10.1K</span>
-                </button>
-            </div>
+<div class="terminal-top">
 
-            <div class="data-box">
-                <p>• <span class="accent">Role:</span> <span class="cyan-text">Full-Stack Automation Expert</span></p>
-                <p>• <span class="accent">Focus:</span> <span class="pink-text">Server Automation & UI Design</span></p>
-                <p>• <span class="accent">Mission:</span> <span class="purple-text">Designing Next-Gen Secure Systems</span></p>
-            </div>
+<div class="dots">
+<div class="dot red"></div>
+<div class="dot yellow"></div>
+<div class="dot green"></div>
+</div>
 
-            <div class="social-links">
-                <a href="https://www.facebook.com/share/1DzT76XvnW/" target="_blank" class="social-btn btn-fb">
-                    Connect via Facebook
-                </a>
-                <a href="https://m.me/Bhodro.habib" target="_blank" class="social-btn btn-msg">
-                    Message on Messenger
-                </a>
-                <a href="https://wa.me/+918327378209" target="_blank" class="social-btn btn-wa">
-                    Chat on WhatsApp
-                </a>
-                <a href="mailto:hsk467459@gmail.com" class="social-btn btn-mail">
-                    Secure Email Tunnel
-                </a>
-            </div>
+<div class="terminal-title">
+habibulla.dev
+</div>
 
-            <p class="footer-text">
-                SYSTEM: ACTIVE // root@habibulla:~# <span class="cursor">■</span>
-            </p>
-        </div>
-    </div>
+</div>
+
+<div class="card-body">
+
+<div class="profile">
+
+<div class="avatar-box">
+<img src="https://i.imgur.com/DSqgcku.jpeg" class="avatar">
+</div>
+
+<h1>SK HABIBULLA</h1>
+
+<div class="tag">
+WEB DESIGNER • CONTENT CREATOR
+</div>
+
+</div>
+
+<!-- HABIB DOWNLOADER -->
+
+<div class="info-box" style="margin-bottom:25px;">
+
+<h2 style="
+text-align:center;
+margin-bottom:8px;
+color:#7dd3fc;
+font-family:'Orbitron',sans-serif;
+letter-spacing:2px;
+">
+HABIB DOWNLOADER
+</h2>
+
+<p style="
+text-align:center;
+font-size:12px;
+color:#cbd5e1;
+margin-bottom:20px;
+letter-spacing:1px;
+">
+INSTAGRAM • FACEBOOK • YOUTUBE
+</p>
+
+<input 
+type="text" 
+id="videoUrl" 
+placeholder="Paste Video URL Here"
+/>
+
+<button 
+onclick="downloadVideo()" 
+class="cyber-btn"
+style="width:100%;cursor:pointer;"
+>
+DOWNLOAD NOW
+</button>
+
+<p 
+id="downloadStatus"
+style="
+margin-top:15px;
+font-size:12px;
+text-align:center;
+color:#cbd5e1;
+"
+>
+READY...
+</p>
+
+</div>
+
+<div class="info-box">
+
+<p>
+> <span class="label">STATUS :</span>
+<span class="highlight">ACTIVE</span>
+</p>
+
+<p>
+> <span class="label">ROLE :</span>
+<span class="highlight">FRONTEND DEVELOPER</span>
+</p>
+
+<p>
+> <span class="label">FOCUS :</span>
+<span class="highlight">UI DESIGN & SOCIAL LINKS</span>
+</p>
+
+<p>
+> <span class="label">SYSTEM :</span>
+<span class="highlight">ALL SERVICES RUNNING</span>
+</p>
+
+</div>
+
+<div class="info-box">
+
+<p>
+> <span class="label">DATE :</span>
+<span class="highlight" id="date"></span>
+</p>
+
+<p>
+> <span class="label">TIME :</span>
+<span class="highlight" id="time"></span>
+</p>
+
+<p>
+> <span class="label">DAY :</span>
+<span class="highlight" id="day"></span>
+</p>
+
+</div>
+
+<div class="links">
+
+<a href="https://www.facebook.com/share/1DzT76XvnW/" target="_blank" class="cyber-btn">
+FACEBOOK
+</a>
+
+<a href="https://m.me/Bhodro.habib" target="_blank" class="cyber-btn">
+MESSENGER
+</a>
+
+<a href="https://wa.me/+918327378209" target="_blank" class="cyber-btn">
+WHATSAPP
+</a>
+
+<a href="mailto:hsk467459@gmail.com" class="cyber-btn">
+EMAIL
+</a>
+
+</div>
+
+<div class="hacking-text">
+WELCOME TO MY PERSONAL PROFILE
+<span class="cursor">█</span>
+</div>
+
+</div>
+</div>
 </div>
 
 <script>
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵ";
-    const charArray = chars.split("");
-    const fontSize = 14;
-    let columns = canvas.width / fontSize;
-    const drops = [];
+function resizeCanvas(){
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+}
 
-    for (let x = 0; x < columns; x++) {
-        drops[x] = Math.random() * -50;
-    }
+resizeCanvas();
 
-    function drawMatrix() {
-        ctx.fillStyle = 'rgba(2, 2, 5, 0.08)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = fontSize + 'px monospace';
+window.addEventListener("resize", resizeCanvas);
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = charArray[Math.floor(Math.random() * charArray.length)];
-            ctx.fillStyle = Math.random() > 0.98 ? '#ffffff' : '#00f0ff';
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 14;
 
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
-                drops[i] = 0;
-            }
-            drops[i]++;
-        }
-    }
-    setInterval(drawMatrix, 33);
+let columns = canvas.width / fontSize;
+let drops = [];
 
-    // Audio/Video Logic
-    const video = document.getElementById('bg-video');
-    const widget = document.getElementById('music-trigger');
-    const statusText = document.getElementById('status-text');
+function initDrops(){
 
-    // Like Counter Logic variables
-    let baseLikes = 10100; // 10.1K base calculation
-    let additionalLikes = 0;
+columns = canvas.width / fontSize;
+drops = [];
 
-    function updateWidgetUI(isPlaying) {
-        if (isPlaying) {
-            widget.classList.remove('paused');
-            statusText.innerText = "CYBER AUDIO: ON";
-            statusText.style.color = "#00f0ff";
-        } else {
-            widget.classList.add('paused');
-            statusText.innerText = "AUDIO: OFF";
-            statusText.style.color = "#fff";
-        }
-    }
+for(let x = 0; x < columns; x++){
+drops[x] = 1;
+}
 
-    function playAudioSecurely() {
-        video.muted = false;
-        video.play().then(() => updateWidgetUI(true)).catch(err => console.log(err));
-    }
+}
 
-    function toggleMusic(event) {
-        if (event) event.stopPropagation();
-        if (video.paused) {
-            playAudioSecurely();
-        } else {
-            video.pause();
-            updateWidgetUI(false);
-        }
-    }
+initDrops();
 
-    // Handle Like Button Functionality
-    function handleLikeClick(event) {
-        if (event) event.stopPropagation(); // Stop from clicking the body listener
-        
-        // 1. Increment Like Count
-        additionalLikes++;
-        const totalLikes = baseLikes + additionalLikes;
-        
-        // Format to display as K if it scales high, but keeps exact precision 
-        const displayValue = (totalLikes / 1000).toFixed(1) + 'K';
-        document.getElementById('like-counter').innerText = displayValue;
+window.addEventListener("resize", initDrops);
 
-        // 2. Play the Gojol instantly on click
-        playAudioSecurely();
-    }
+function draw(){
 
-    // Modern Unmute Autoplay Trigger on first user touch/click anywhere on screen
-    function forceUnmuteAutoplay() {
-        if (video.paused) {
-            video.muted = false;
-            video.play().then(() => {
-                updateWidgetUI(true);
-            }).catch(err => console.log("Autoplay policy restriction active", err));
-        } else {
-            video.muted = false;
-            updateWidgetUI(true);
-        }
-        window.removeEventListener('click', forceUnmuteAutoplay);
-        window.removeEventListener('touchstart', forceUnmuteAutoplay);
-    }
+ctx.fillStyle = "rgba(0,0,0,0.15)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    window.addEventListener('click', forceUnmuteAutoplay);
-    window.addEventListener('touchstart', forceUnmuteAutoplay);
+ctx.fillStyle = "#38bdf8";
+ctx.font = fontSize + "px monospace";
+
+for(let i = 0; i < drops.length; i++){
+
+const text =
+letters[Math.floor(Math.random() * letters.length)];
+
+ctx.fillText(
+text,
+i * fontSize,
+drops[i] * fontSize
+);
+
+if(
+drops[i] * fontSize > canvas.height &&
+Math.random() > 0.975
+){
+drops[i] = 0;
+}
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,33);
+
+/* MUSIC */
+
+const music = document.getElementById("bgMusic");
+
+function toggleMusic(){
+
+if(music.paused){
+music.play();
+}else{
+music.pause();
+}
+
+}
+
+/* CLOCK */
+
+function updateClock(){
+
+const now = new Date();
+
+const days = [
+"Sunday",
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday",
+"Saturday"
+];
+
+document.getElementById("date").innerHTML =
+now.toLocaleDateString();
+
+document.getElementById("time").innerHTML =
+now.toLocaleTimeString();
+
+document.getElementById("day").innerHTML =
+days[now.getDay()];
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* DOWNLOADER */
+
+async function downloadVideo(){
+
+const url =
+document.getElementById("videoUrl").value;
+
+const status =
+document.getElementById("downloadStatus");
+
+if(!url){
+
+status.innerHTML =
+"PLEASE ENTER URL";
+
+return;
+
+}
+
+status.innerHTML =
+"PROCESSING...";
+
+try{
+
+const api =
+"https://api.vevioz.com/api/button/mp4?url=" +
+encodeURIComponent(url);
+
+window.open(api, "_blank");
+
+status.innerHTML =
+"DOWNLOAD STARTED";
+
+}catch(err){
+
+status.innerHTML =
+"FAILED TO DOWNLOAD";
+
+}
+
+}
+
 </script>
 
 </body>

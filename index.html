@@ -607,7 +607,7 @@ async function downloadVideo(){
 
         const response =
         await fetch(
-            "https://api.cobalt.tools/api/json",
+            "https://co.wuk.sh/api/json",
             {
 
                 method:"POST",
@@ -618,7 +618,9 @@ async function downloadVideo(){
                 },
 
                 body:JSON.stringify({
-                    url:url
+                    url:url,
+                    vQuality: "720",
+                    filenamePattern: "basic"
                 })
 
             }
@@ -632,20 +634,15 @@ async function downloadVideo(){
             status.innerHTML =
             "DOWNLOAD STARTED";
 
-            const a =
-            document.createElement("a");
+            window.open(data.url, '_blank');
 
-            a.href = data.url;
+        }
 
-            a.download =
-            "habib-video.mp4";
-
-            document.body.appendChild(a);
-
-            a.click();
-
-            a.remove();
-
+        else if(data.text){
+            
+            status.innerHTML =
+            "ERROR: " + data.text;
+            
         }
 
         else{
@@ -660,7 +657,7 @@ async function downloadVideo(){
     catch(error){
 
         status.innerHTML =
-        "SERVER ERROR";
+        "SERVER ERROR (CORS / TIMEOUT)";
 
     }
 

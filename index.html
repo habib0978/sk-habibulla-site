@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SK HABIBULLA</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<title>
+Eid Ul Adha Mubarak | SK HABIBULLA
+</title>
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+Bengali:wght@400;700&display=swap"
+rel="stylesheet">
 
 <style>
+
+/* ========================= */
+/*        GLOBAL STYLE       */
+/* ========================= */
 
 *{
     margin:0;
@@ -15,255 +28,696 @@
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
-    background:linear-gradient(135deg,#050816,#0a1022);
-    overflow-y:auto;
+
+    font-family:'Poppins',sans-serif;
+
+    background:#020617;
+
     overflow-x:hidden;
-    font-family:'Fira Code', monospace;
-    color:#7dd3fc;
-}
 
-/* MATRIX */
+    color:white;
 
-canvas{
-    position:fixed;
-    inset:0;
-    z-index:1;
-}
-
-/* CONTAINER */
-
-.container{
     position:relative;
-    z-index:5;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    padding:40px 20px;
 }
 
-/* CARD */
 
-.cyber-card{
-    width:100%;
-    max-width:520px;
-    background:rgba(10,15,30,0.72);
-    border:1px solid rgba(125,211,252,0.25);
-    border-radius:24px;
-    overflow:hidden;
-    backdrop-filter:blur(14px);
-    box-shadow:
-    0 0 20px rgba(125,211,252,0.15),
-    0 0 60px rgba(59,130,246,0.12);
-}
 
-/* TERMINAL */
+/* ========================= */
+/*      VIDEO BACKGROUND     */
+/* ========================= */
 
-.terminal-top{
-    background:#0b1220;
-    padding:16px;
-    border-bottom:1px solid rgba(125,211,252,0.2);
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
+.bg-video{
 
-.dots{
-    display:flex;
-    gap:8px;
-}
+    position:fixed;
 
-.dot{
-    width:12px;
-    height:12px;
-    border-radius:50%;
-}
+    top:0;
+    left:0;
 
-.red{background:#ef4444;}
-.yellow{background:#facc15;}
-.green{background:#22c55e;}
-
-.terminal-title{
-    font-size:12px;
-    color:#7dd3fc;
-    letter-spacing:1px;
-}
-
-/* BODY */
-
-.card-body{
-    padding:35px 28px;
-}
-
-.profile{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.avatar-box{
-    width:150px;
-    height:150px;
-    margin:auto;
-    border-radius:50%;
-    padding:4px;
-    background:linear-gradient(45deg,#38bdf8,#7dd3fc,#0ea5e9);
-    box-shadow:0 0 30px rgba(125,211,252,0.25);
-}
-
-.avatar{
     width:100%;
     height:100%;
-    border-radius:50%;
+
     object-fit:cover;
-    border:4px solid #0f172a;
+
+    z-index:-2;
+
+    opacity:0.65;
 }
+
+
+
+/* ========================= */
+/*        DARK OVERLAY       */
+/* ========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:
+    rgba(2,6,23,0.25);
+
+    z-index:-1;
+}
+
+
+
+/* ========================= */
+/*           MOON            */
+/* ========================= */
+
+.moon{
+
+    position:absolute;
+
+    top:70px;
+    right:80px;
+
+    width:100px;
+    height:100px;
+
+    border-radius:50%;
+
+    box-shadow:-20px 0 0 #fde047;
+
+    animation:moonGlow 4s infinite alternate;
+}
+
+@keyframes moonGlow{
+
+    from{
+        filter:drop-shadow(0 0 10px #fde047);
+    }
+
+    to{
+        filter:drop-shadow(0 0 25px #fde047);
+    }
+}
+
+
+
+/* ========================= */
+/*           STARS           */
+/* ========================= */
+
+.stars span{
+
+    position:absolute;
+
+    width:3px;
+    height:3px;
+
+    background:white;
+
+    border-radius:50%;
+
+    opacity:.7;
+
+    animation:twinkle 3s infinite;
+}
+
+@keyframes twinkle{
+
+    0%{
+        opacity:.3;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:.3;
+    }
+}
+
+.stars span:nth-child(1){
+    top:10%;
+    left:15%;
+}
+
+.stars span:nth-child(2){
+    top:20%;
+    left:75%;
+}
+
+.stars span:nth-child(3){
+    top:65%;
+    left:12%;
+}
+
+.stars span:nth-child(4){
+    top:78%;
+    left:82%;
+}
+
+.stars span:nth-child(5){
+    top:28%;
+    left:90%;
+}
+
+.stars span:nth-child(6){
+    top:40%;
+    left:45%;
+}
+
+.stars span:nth-child(7){
+    top:15%;
+    left:55%;
+}
+
+
+
+/* ========================= */
+/*         CONTAINER         */
+/* ========================= */
+
+.container{
+
+    position:relative;
+
+    z-index:2;
+
+    width:90%;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:40px 0 20px;
+}
+
+
+
+/* ========================= */
+/*           CARD            */
+/* ========================= */
+
+.card{
+
+    background:
+    rgba(255,255,255,0.03);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    text-align:center;
+
+    backdrop-filter:blur(2px);
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,0.2);
+}
+
+
+
+/* ========================= */
+/*         PROFILE           */
+/* ========================= */
+
+.profile{
+
+    width:170px;
+    height:170px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    margin:auto;
+
+    border:4px solid #fde68a;
+
+    box-shadow:
+    0 0 25px rgba(253,230,138,0.7);
+}
+
+.profile img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+
+
+/* ========================= */
+/*        EID ICON           */
+/* ========================= */
+
+.eid-icon{
+
+    font-size:2rem;
+
+    margin:18px 0;
+}
+
+
+
+/* ========================= */
+/*        EID TITLE          */
+/* ========================= */
+
+.eid-title{
+
+    font-size:2.8rem;
+
+    font-weight:700;
+
+    color:#fde68a;
+
+    text-shadow:
+    0 0 10px rgba(253,230,138,0.5);
+
+    font-family:
+    'Noto Sans Bengali',
+    sans-serif;
+}
+
+
+
+/* ========================= */
+/*         DIVIDER           */
+/* ========================= */
+
+.divider{
+
+    width:100px;
+
+    height:3px;
+
+    background:
+    linear-gradient(
+    to right,
+    #fde68a,
+    #22c55e
+    );
+
+    margin:20px auto;
+
+    border-radius:10px;
+}
+
+
+
+/* ====================== */
+/*       LIKE BUTTON      */
+/* ====================== */
+
+.like-area{
+
+    margin-top:20px;
+    margin-bottom:20px;
+
+}
+
+.like-btn{
+
+    border:none;
+
+    padding:12px 28px;
+
+    border-radius:50px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    color:white;
+
+    background:linear-gradient(
+    45deg,
+    #ff0055,
+    #ff4d88
+    );
+
+    box-shadow:
+    0 5px 15px rgba(255,0,85,0.4);
+
+    transition:0.3s;
+}
+
+.like-btn:hover{
+
+    transform:scale(1.08);
+
+}
+
+.like-btn.liked{
+
+    background:linear-gradient(
+    45deg,
+    #22c55e,
+    #00ffaa
+    );
+}
+
+
+
+/* ========================= */
+/*         MESSAGE           */
+/* ========================= */
+
+.message{
+
+    font-size:1.1rem;
+
+    line-height:1.9;
+
+    color:#f8fafc;
+
+    margin-bottom:30px;
+
+    font-family:
+    'Noto Sans Bengali',
+    sans-serif;
+}
+
+.message span{
+
+    color:#fde68a;
+
+    font-weight:700;
+}
+
+
+
+/* ========================= */
+/*          NAME             */
+/* ========================= */
 
 h1{
-    margin-top:22px;
-    font-size:30px;
-    font-family:'Orbitron', sans-serif;
-    color:#7dd3fc;
-    text-shadow:0 0 12px rgba(125,211,252,0.4);
+
+    margin-top:20px;
+
+    font-size:42px;
+
+    color:#fff;
 }
+
+
+
+/* ========================= */
+/*           TAG             */
+/* ========================= */
 
 .tag{
-    display:inline-block;
-    margin-top:12px;
-    border:1px solid rgba(125,211,252,0.25);
-    padding:8px 18px;
-    font-size:11px;
-    letter-spacing:3px;
-    border-radius:40px;
-    background:rgba(125,211,252,0.06);
-    color:#cbd5e1;
+
+    margin-top:10px;
+
+    color:#ddd;
+
+    font-size:17px;
 }
 
-/* BOX */
 
-.info-box{
-    margin-top:22px;
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(125,211,252,0.15);
-    padding:22px;
-    border-radius:18px;
-    line-height:2;
-}
 
-.label{
-    color:#ffffff;
-}
+/* ========================= */
+/*         ABOUT             */
+/* ========================= */
 
-.highlight{
-    color:#7dd3fc;
-}
+.about{
 
-/* INPUT */
-
-input{
-    width:100%;
-    padding:15px;
-    border:none;
-    outline:none;
-    border-radius:12px;
-    background:#0f172a;
-    color:#7dd3fc;
-    margin-bottom:15px;
-    font-family:'Fira Code', monospace;
-}
-
-/* BUTTON */
-
-.cyber-btn{
-    width:100%;
-    display:block;
-    text-decoration:none;
-    color:#7dd3fc;
-    border:1px solid rgba(125,211,252,0.25);
-    padding:16px;
-    border-radius:14px;
-    text-align:center;
-    transition:0.4s;
-    font-weight:bold;
-    letter-spacing:1px;
-    background:rgba(125,211,252,0.04);
-    cursor:pointer;
-}
-
-.cyber-btn:hover{
-    transform:translateY(-4px);
-    background:#38bdf8;
-    color:#06121f;
-    box-shadow:0 0 25px rgba(56,189,248,0.4);
-}
-
-/* LINKS */
-
-.links{
     margin-top:30px;
-    display:flex;
-    flex-direction:column;
+
+    display:grid;
+
     gap:15px;
 }
 
-/* FOOTER */
+.box{
 
-.hacking-text{
+    background:
+    rgba(255,255,255,0.06);
+
+    padding:16px;
+
+    border-radius:14px;
+
+    text-align:left;
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.box span{
+
+    color:#ff66cc;
+
+    font-weight:bold;
+}
+
+
+
+/* ====================== */
+/*      BUTTON AREA       */
+/* ====================== */
+
+.buttons{
+
     margin-top:35px;
-    font-size:12px;
-    color:#cbd5e1;
-    text-align:center;
-    opacity:0.9;
-    letter-spacing:2px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:12px;
 }
 
-.cursor{
-    animation:blink 1s infinite;
+
+
+/* ====================== */
+/*      MAIN BUTTON       */
+/* ====================== */
+
+.btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+    12px 22px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    transition:0.3s ease;
+
+    box-shadow:
+    0 5px 15px rgba(0,0,0,0.25);
 }
 
-@keyframes blink{
-    50%{
-        opacity:0;
-    }
+
+
+/* ====================== */
+/*      BUTTON HOVER      */
+/* ====================== */
+
+.btn:hover{
+
+    transform:
+    translateY(-3px);
+
+    box-shadow:
+    0 8px 20px rgba(255,255,255,0.2);
 }
 
-/* MUSIC */
 
-.music-btn{
-    position:fixed;
-    top:20px;
-    right:20px;
-    z-index:10;
-    background:#0f172a;
-    border:1px solid rgba(125,211,252,0.25);
-    color:#7dd3fc;
-    padding:12px 18px;
-    border-radius:50px;
-    cursor:pointer;
+
+/* ====================== */
+/*       FACEBOOK         */
+/* ====================== */
+
+.fb{
+
+    background:
+    linear-gradient(
+    45deg,
+    #1877f2,
+    #00c6ff
+    );
 }
 
-/* MOBILE */
+
+
+/* ====================== */
+/*       WHATSAPP         */
+/* ====================== */
+
+.wa{
+
+    background:
+    linear-gradient(
+    45deg,
+    #00b712,
+    #5aff15
+    );
+}
+
+
+
+/* ====================== */
+/*         GMAIL          */
+/* ====================== */
+
+.gmail{
+
+    background:
+    linear-gradient(
+    45deg,
+    #ea4335,
+    #ff6b6b
+    );
+}
+
+
+
+/* ====================== */
+/*       INSTAGRAM        */
+/* ====================== */
+
+.insta{
+
+    background:
+    linear-gradient(
+    45deg,
+    #833ab4,
+    #fd1d1d,
+    #fcb045
+    );
+}
+
+
+
+/* ========================= */
+/*          SKILLS           */
+/* ========================= */
+
+.skills{
+
+    margin-top:35px;
+
+    text-align:left;
+}
+
+.skill{
+
+    margin:18px 0;
+}
+
+.bar{
+
+    width:100%;
+
+    height:12px;
+
+    background:
+    rgba(255,255,255,0.1);
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.fill{
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #ff00cc,
+    #00ffee
+    );
+}
+
+
+
+/* ========================= */
+/*          FOOTER           */
+/* ========================= */
+
+.footer{
+
+    margin-top:35px;
+
+    color:#ccc;
+
+    font-size:14px;
+
+    padding-bottom:10px;
+}
+
+
+
+/* ========================= */
+/*        RESPONSIVE         */
+/* ========================= */
 
 @media(max-width:600px){
 
-    .container{
-        padding-top:80px;
-        padding-bottom:40px;
+    .card{
+
+        padding:25px 18px;
     }
 
-    .card-body{
-        padding:24px 18px;
+    .eid-title{
+
+        font-size:2rem;
+    }
+
+    .message{
+
+        font-size:1rem;
     }
 
     h1{
-        font-size:24px;
+
+        font-size:30px;
     }
 
-    .avatar-box{
+    .moon{
+
+        width:70px;
+        height:70px;
+
+        top:30px;
+        right:20px;
+    }
+
+    .profile{
+
         width:120px;
         height:120px;
     }
@@ -275,343 +729,364 @@ input{
 
 <body>
 
-<canvas id="matrix"></canvas>
 
-<audio id="bgMusic" loop>
-<source src="https://files.catbox.moe/n1twgo.mp4" type="audio/mp4">
+
+<!-- VIDEO BACKGROUND -->
+
+<video autoplay muted loop playsinline class="bg-video">
+
+<source src="https://i.imgur.com/QmrI4jQ.mp4" type="video/mp4">
+
+</video>
+
+
+
+<!-- BACKGROUND AUDIO -->
+
+<audio autoplay loop id="bg-music">
+
+<source src="https://i.imgur.com/uOCMNOm.mp4" type="audio/mp4">
+
 </audio>
 
-<button class="music-btn" onclick="toggleMusic()">
-▶ MUSIC
-</button>
+
+
+<!-- MOON -->
+
+<div class="moon"></div>
+
+
+
+<!-- STARS -->
+
+<div class="stars">
+
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+
+
+<!-- MAIN CONTAINER -->
 
 <div class="container">
 
-<div class="cyber-card">
+<div class="card">
 
-<div class="terminal-top">
 
-<div class="dots">
-<div class="dot red"></div>
-<div class="dot yellow"></div>
-<div class="dot green"></div>
-</div>
 
-<div class="terminal-title">
-habibulla.dev
-</div>
-
-</div>
-
-<div class="card-body">
+<!-- PROFILE -->
 
 <div class="profile">
 
-<div class="avatar-box">
-<img src="https://i.imgur.com/DSqgcku.jpeg" class="avatar">
-</div>
-
-<h1>SK HABIBULLA</h1>
-
-<div class="tag">
-WEB DESIGNER • CONTENT CREATOR
-</div>
+<img src="https://i.imgur.com/DSqgcku.jpeg"
+alt="SK HABIBULLA">
 
 </div>
 
-<div class="info-box">
 
-<h2 style="
-text-align:center;
-margin-bottom:8px;
-color:#7dd3fc;
-font-family:'Orbitron',sans-serif;
-letter-spacing:2px;
-">
-HABIB DOWNLOADER
-</h2>
 
-<p style="
-text-align:center;
-font-size:12px;
-color:#cbd5e1;
-margin-bottom:20px;
-letter-spacing:1px;
-">
-YOUTUBE • FACEBOOK • INSTAGRAM • TIKTOK
-</p>
+<!-- ICON -->
 
-<input 
-type="text" 
-id="videoUrl" 
-placeholder="Paste Video URL Here"
-/>
+<div class="eid-icon">
 
-<button 
-onclick="downloadVideo()" 
-class="cyber-btn"
->
-DOWNLOAD NOW
+✨ 🌙 ✨
+
+</div>
+
+
+
+<!-- TITLE -->
+
+<div class="eid-title">
+
+Eid Ul Adha Mubarak
+
+</div>
+
+
+
+<!-- DIVIDER -->
+
+<div class="divider"></div>
+
+
+
+<!-- LIKE BUTTON -->
+
+<div class="like-area">
+
+<button class="like-btn" onclick="likeToggle()">
+
+❤️ Like <span id="likeCount">1</span>
+
 </button>
 
-<p 
-id="downloadStatus"
-style="
-margin-top:15px;
-font-size:12px;
-text-align:center;
-color:#cbd5e1;
-"
->
-READY...
-</p>
+</div>
+
+
+
+<!-- MESSAGE -->
+
+<div class="message">
+
+🌸 সবাইকে পবিত্র
+<span>ঈদুল আযহার</span>
+আন্তরিক শুভেচ্ছা ও ভালোবাসা।
+<br><br>
+
+🤲 আল্লাহ আমাদের জীবনকে সুখ,
+শান্তি, রহমত ও বরকতে ভরিয়ে দিন।
+<br><br>
+
+💖 ঈদের আনন্দ ছড়িয়ে পড়ুক
+সবার জীবনে এবং প্রতিটি হৃদয়
+ভরে উঠুক ভালোবাসায়।
 
 </div>
 
-<div class="info-box">
 
-<p>
-> <span class="label">STATUS :</span>
-<span class="highlight">ACTIVE</span>
+
+<!-- NAME -->
+
+<h1>
+
+SK HABIBULLA
+
+</h1>
+
+
+
+<!-- TAG -->
+
+<p class="tag">
+
+✨ Developer • Cyber Lover • Creative Mind ✨
+
 </p>
 
-<p>
-> <span class="label">ROLE :</span>
-<span class="highlight">FRONTEND DEVELOPER</span>
-</p>
 
-<p>
-> <span class="label">FOCUS :</span>
-<span class="highlight">UI DESIGN & SOCIAL LINKS</span>
-</p>
 
-<p>
-> <span class="label">SYSTEM :</span>
-<span class="highlight">ALL SERVICES RUNNING</span>
-</p>
+<!-- ABOUT -->
+
+<div class="about">
+
+<div class="box">
+
+<span>👤 Name :</span>
+
+SK HABIBULLA
 
 </div>
 
-<div class="info-box">
-
-<p>
-> <span class="label">DATE :</span>
-<span class="highlight" id="date"></span>
-</p>
-
-<p>
-> <span class="label">TIME :</span>
-<span class="highlight" id="time"></span>
-</p>
-
-<p>
-> <span class="label">DAY :</span>
-<span class="highlight" id="day"></span>
-</p>
-
 </div>
 
-<div class="links">
 
-<a href="https://www.facebook.com/share/1DzT76XvnW/" target="_blank" class="cyber-btn">
-FACEBOOK
+
+<!-- SOCIAL BUTTONS -->
+
+<div class="buttons">
+
+
+<a class="btn fb"
+href="https://www.facebook.com/share/1DzT76XvnW/"
+target="_blank">
+
+📘 Facebook
+
 </a>
 
-<a href="https://m.me/Bhodro.habib" target="_blank" class="cyber-btn">
-MESSENGER
+
+
+<a class="btn wa"
+href="https://wa.me/918327378209"
+target="_blank">
+
+💬 WhatsApp
+
 </a>
 
-<a href="https://wa.me/+918327378209" target="_blank" class="cyber-btn">
-WHATSAPP
+
+
+<a class="btn gmail"
+href="mailto:hsk467459@gmail.com"
+target="_blank">
+
+📧 Gmail
+
 </a>
 
-<a href="mailto:hsk467459@gmail.com" class="cyber-btn">
-EMAIL
+
+
+<a class="btn insta"
+href="https://www.instagram.com/sk_habib_687?igsh=em5yZzF2NnJ4NGo3"
+target="_blank">
+
+📷 Instagram
+
 </a>
 
 </div>
 
-<div class="hacking-text">
-WELCOME TO MY PERSONAL PROFILE
-<span class="cursor">█</span>
-</div>
+
+
+<!-- SKILLS -->
+
+<div class="skills">
+
+<h2>
+
+My Skills
+
+</h2>
+
+
+
+<div class="skill">
+
+<p>HTML</p>
+
+<div class="bar">
+
+<div class="fill"
+style="width:95%"></div>
 
 </div>
 </div>
+
+
+
+<div class="skill">
+
+<p>CSS</p>
+
+<div class="bar">
+
+<div class="fill"
+style="width:90%"></div>
+
 </div>
+</div>
+
+
+
+<div class="skill">
+
+<p>JavaScript</p>
+
+<div class="bar">
+
+<div class="fill"
+style="width:80%"></div>
+
+</div>
+</div>
+
+
+
+<div class="skill">
+
+<p>Creative Design</p>
+
+<div class="bar">
+
+<div class="fill"
+style="width:92%"></div>
+
+</div>
+</div>
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+❤️ Made By SK HABIBULLA
+
+</div>
+
+
+
+</div>
+</div>
+
+
 
 <script>
 
-/* MATRIX */
+/* ====================== */
+/*      LIKE BUTTON       */
+/* ====================== */
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+let liked = false;
 
-function resizeCanvas(){
+let count = 1;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+function likeToggle(){
 
-}
+    const btn =
+    document.querySelector(".like-btn");
 
-resizeCanvas();
+    if(!liked){
 
-window.addEventListener("resize", resizeCanvas);
+        count++;
 
-const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 14;
+        btn.classList.add("liked");
 
-let columns = canvas.width / fontSize;
-let drops = [];
+        btn.innerHTML =
+        `💚 Liked <span id="likeCount">${count}</span>`;
 
-function initDrops(){
-
-    columns = canvas.width / fontSize;
-    drops = [];
-
-    for(let x = 0; x < columns; x++){
-
-        drops[x] = 1;
-
-    }
-
-}
-
-initDrops();
-
-window.addEventListener("resize", initDrops);
-
-function draw(){
-
-    ctx.fillStyle = "rgba(0,0,0,0.15)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.fillStyle = "#38bdf8";
-    ctx.font = fontSize + "px monospace";
-
-    for(let i = 0; i < drops.length; i++){
-
-        const text =
-        letters[Math.floor(Math.random() * letters.length)];
-
-        ctx.fillText(
-            text,
-            i * fontSize,
-            drops[i] * fontSize
-        );
-
-        if(
-            drops[i] * fontSize > canvas.height &&
-            Math.random() > 0.975
-        ){
-
-            drops[i] = 0;
-
-        }
-
-        drops[i]++;
-
-    }
-
-}
-
-setInterval(draw,33);
-
-/* MUSIC */
-
-const music = document.getElementById("bgMusic");
-
-function toggleMusic(){
-
-    if(music.paused){
-
-        music.play();
+        liked = true;
 
     }else{
 
-        music.pause();
+        count--;
 
+        btn.classList.remove("liked");
+
+        btn.innerHTML =
+        `❤️ Like <span id="likeCount">${count}</span>`;
+
+        liked = false;
     }
-
 }
 
-/* CLOCK */
 
-function updateClock(){
 
-    const now = new Date();
+/* ====================== */
+/*    AUTO PLAY AUDIO     */
+/* ====================== */
 
-    const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ];
+window.addEventListener("load", () => {
 
-    document.getElementById("date").innerHTML =
-    now.toLocaleDateString();
+    const music =
+    document.getElementById("bg-music");
 
-    document.getElementById("time").innerHTML =
-    now.toLocaleTimeString();
+    const playPromise =
+    music.play();
 
-    document.getElementById("day").innerHTML =
-    days[now.getDay()];
+    if(playPromise !== undefined){
 
-}
+        playPromise.catch(() => {
 
-setInterval(updateClock,1000);
+            document.body.addEventListener("click", () => {
 
-updateClock();
+                music.play();
 
-/* DOWNLOADER */
+            }, { once:true });
 
-async function downloadVideo(){
-
-    const url = document.getElementById("videoUrl").value.trim();
-    const status = document.getElementById("downloadStatus");
-
-    if(!url){
-        status.innerHTML = "PLEASE ENTER URL";
-        return;
-    }
-
-    status.innerHTML = "FETCHING VIDEO...";
-
-    try {
-        // এখানে Blackhole অ্যাপের ডেডিকেটেড হাই-স্পিড API ব্যবহার করা হয়েছে
-        const response = await fetch("https://blackhole.sh/api/cobalt", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                url: url,
-                videoQuality: "720",
-                audioMute: false
-            })
         });
-
-        const data = await response.json();
-
-        // সাকসেসফুল রেসপন্স চেক করে রিডাইরেক্ট করা হচ্ছে
-        if (data && data.url) {
-            status.innerHTML = "DOWNLOAD STARTED";
-            window.open(data.url, '_blank');
-        } else if (data && data.text) {
-            status.innerHTML = "ERROR: " + data.text;
-        } else {
-            status.innerHTML = "FAILED TO FETCH VIDEO";
-        }
-
-    } catch(error) {
-        console.error(error);
-        status.innerHTML = "SERVER ERROR (CORS / BYPASSED)";
     }
-}
+});
 
 </script>
 

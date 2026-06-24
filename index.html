@@ -274,7 +274,7 @@
             const result = document.getElementById("result");
             if(!url) return alert("Enter valid URL");
             
-            result.innerHTML = "⏳ Downloading please wait ...";
+            result.innerHTML = "⏳ Bypassing firewall & extracting...";
             try {
                 const res = await fetch(`https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(url)}`);
                 const data = await res.json();
@@ -288,17 +288,20 @@
             } catch(e) { result.innerHTML = "❌ Error securing content."; }
         }
 
-        // --- FIXED DOWNLOAD FUNCTION ---
+        // --- FIXED FORCE DOWNLOAD FUNCTION WITH CORS BYPASS ---
         async function downloadFile(videoUrl) {
             const dlBtn = document.getElementById('dl-btn');
             const originalText = dlBtn.innerText;
             dlBtn.innerText = "📥 DOWNLOADING...";
             dlBtn.disabled = true;
 
+            // CORS পলিসি বাইপাস করার জন্য একটি ফ্রি অল্টারনেটিভ প্রক্সি ইউআরএল মেক করা হয়েছে
+            const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(videoUrl);
+
             try {
-                // ১. প্রথমে ব্রাউজার ব্যাকএন্ডে ফাইল ব্লব হিসেবে ডাউনলোড করার চেষ্টা করবে
-                const response = await fetch(videoUrl);
-                if (!response.ok) throw new Error("CORS or network error");
+                // প্রক্সি দিয়ে ফাইল রিকোয়েস্ট করা হচ্ছে যেন ডাউনলোড ব্লক না হয়
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error("Proxy download failed");
                 
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
@@ -306,15 +309,16 @@
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = blobUrl;
-                a.download = `habib_downloader_${Date.now()}.mp4`;
+                // একটি র্যান্ডম ফাইলনেম জেনারেট করা হচ্ছে
+                a.download = `Habib_DL_${Math.floor(Math.random() * 100000)}.mp4`;
                 document.body.appendChild(a);
                 a.click();
                 
+                // ক্লিনআপ মেমোরি
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
             } catch (error) {
-                // ২. CORS ব্লকের কারণে ট্রাই ব্লক ফেইল হলে কোনো পপ-আপ না দেখিয়ে সরাসরি নতুন ট্যাবে ওপেন হবে
-                // এতে ইউজাররা খুব সহজেই ৩-ডট মেনু বা লং প্রেস করে ভিডিওটি ডাউনলোড করে নিতে পারবে।
+                // অত্যন্ত রেয়ার কেসে যদি প্রক্সি ডাউন থাকে, তবে এটি ব্যাকআপ হিসেবে নতুন ট্যাবে ফাইল ওপেন করবে
                 window.open(videoUrl, '_blank');
             } finally {
                 dlBtn.innerText = originalText;

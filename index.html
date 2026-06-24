@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; overflow-x: hidden; background-color: #080710; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #f5f5f7; }
-        canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; } /* Water ripple canvas */
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; } 
 
         /* Aesthetic Background Glows */
         body::before, body::after {
@@ -58,7 +58,6 @@
             gap: 8px;
         }
 
-        /* ইমোজিটিকে ক্লিয়ার এবং অরিজিনাল কালারে দেখানোর জন্য */
         .clear-emoji {
             -webkit-text-fill-color: initial;
             background: none;
@@ -213,11 +212,9 @@
 </head>
 <body>
 
-    <!-- পানির ফোঁটা পড়ার ক্যানভাস -->
     <canvas id="waterRain"></canvas>
 
     <div class="container">
-        <!-- ইমোজিটিকে clear-emoji ক্লাসের ভেতর রাখা হয়েছে -->
         <div class="terminal-text">HABIB DOWNLOADER <span class="clear-emoji">📥</span></div>
         
         <input type="text" id="videoUrl" placeholder="Paste Video URL Here...">
@@ -249,62 +246,27 @@
         // --- Water Droplet & Rain Animation ---
         const canvas = document.getElementById('waterRain');
         const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const maxDrops = 100;
-        const drops = [];
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const maxDrops = 100; const drops = [];
 
         class Droplet {
-            constructor() {
-                this.reset();
-                this.y = Math.random() * canvas.height;
-            }
-
+            constructor() { this.reset(); this.y = Math.random() * canvas.height; }
             reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = -20;
-                this.length = Math.random() * 15 + 10;
-                this.speed = Math.random() * 4 + 3;
+                this.x = Math.random() * canvas.width; this.y = -20;
+                this.length = Math.random() * 15 + 10; this.speed = Math.random() * 4 + 3;
                 this.opacity = Math.random() * 0.2 + 0.1;
             }
-
             draw() {
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(174, 219, 255, ${this.opacity})`;
-                ctx.lineWidth = 1.5;
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x, this.y + this.length);
-                ctx.stroke();
+                ctx.beginPath(); ctx.strokeStyle = `rgba(174, 219, 255, ${this.opacity})`;
+                ctx.lineWidth = 1.5; ctx.moveTo(this.x, this.y); ctx.lineTo(this.x, this.y + this.length); ctx.stroke();
             }
-
-            update() {
-                this.y += this.speed;
-                if (this.y > canvas.height) {
-                    this.reset();
-                }
-                this.draw();
-            }
+            update() { this.y += this.speed; if (this.y > canvas.height) { this.reset(); } this.draw(); }
         }
 
-        for (let i = 0; i < maxDrops; i++) {
-            drops.push(new Droplet());
-        }
-
-        function animateWater() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drops.forEach(drop => drop.update());
-            requestAnimationFrame(animateWater);
-        }
-        
+        for (let i = 0; i < maxDrops; i++) { drops.push(new Droplet()); }
+        function animateWater() { ctx.clearRect(0, 0, canvas.width, canvas.height); drops.forEach(drop => drop.update()); requestAnimationFrame(animateWater); }
         animateWater();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
         // --- Download Logic ---
         async function downloadVideo() {
@@ -312,7 +274,7 @@
             const result = document.getElementById("result");
             if(!url) return alert("Enter valid URL");
             
-            result.innerHTML = "⏳ Bypassing firewall & extracting...";
+            result.innerHTML = "⏳ Downloading please wait ...";
             try {
                 const res = await fetch(`https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(url)}`);
                 const data = await res.json();
@@ -326,7 +288,7 @@
             } catch(e) { result.innerHTML = "❌ Error securing content."; }
         }
 
-        // Direct Download Function
+        // --- FIXED DOWNLOAD FUNCTION ---
         async function downloadFile(videoUrl) {
             const dlBtn = document.getElementById('dl-btn');
             const originalText = dlBtn.innerText;
@@ -334,7 +296,10 @@
             dlBtn.disabled = true;
 
             try {
+                // ১. প্রথমে ব্রাউজার ব্যাকএন্ডে ফাইল ব্লব হিসেবে ডাউনলোড করার চেষ্টা করবে
                 const response = await fetch(videoUrl);
+                if (!response.ok) throw new Error("CORS or network error");
+                
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
                 
@@ -348,7 +313,9 @@
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
             } catch (error) {
-                alert("Direct download failed! Try long pressing the video to save.");
+                // ২. CORS ব্লকের কারণে ট্রাই ব্লক ফেইল হলে কোনো পপ-আপ না দেখিয়ে সরাসরি নতুন ট্যাবে ওপেন হবে
+                // এতে ইউজাররা খুব সহজেই ৩-ডট মেনু বা লং প্রেস করে ভিডিওটি ডাউনলোড করে নিতে পারবে।
+                window.open(videoUrl, '_blank');
             } finally {
                 dlBtn.innerText = originalText;
                 dlBtn.disabled = false;

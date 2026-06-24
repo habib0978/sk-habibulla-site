@@ -1,196 +1,194 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Habib Downloader Pro</title>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Video Downloader</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-height:100vh;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(
--45deg,
-#0f172a,
-#111827,
-#1e293b,
-#0f172a
-);
-background-size:400% 400%;
-animation:bg 10s ease infinite;
+padding:20px;
 }
 
-@keyframes bg{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-.card{
-width:95%;
-max-width:450px;
-padding:25px;
-border-radius:25px;
+.container{
+width:100%;
+max-width:700px;
 background:rgba(255,255,255,.08);
 backdrop-filter:blur(15px);
-border:1px solid rgba(255,255,255,.2);
-box-shadow:0 0 30px rgba(0,255,255,.2);
+border:1px solid rgba(255,255,255,.15);
+border-radius:24px;
+padding:30px;
+box-shadow:0 15px 40px rgba(0,0,0,.3);
+color:#fff;
 }
 
 .logo{
 text-align:center;
-font-size:28px;
-font-weight:bold;
-color:#00ffff;
-margin-bottom:20px;
+margin-bottom:25px;
+}
+
+.logo h1{
+font-size:32px;
+font-weight:700;
+}
+
+.logo p{
+opacity:.8;
+font-size:14px;
+margin-top:5px;
+}
+
+.input-box{
+display:flex;
+gap:10px;
+margin-top:20px;
 }
 
 input{
-width:100%;
+flex:1;
 padding:15px;
 border:none;
 outline:none;
-border-radius:12px;
-background:#111827;
-color:white;
-margin-bottom:15px;
+border-radius:14px;
+background:rgba(255,255,255,.1);
+color:#fff;
+font-size:15px;
+}
+
+input::placeholder{
+color:#cbd5e1;
 }
 
 button{
-width:100%;
-padding:15px;
+padding:15px 25px;
 border:none;
-border-radius:12px;
-background:#00ffff;
-color:#000;
-font-weight:bold;
+border-radius:14px;
 cursor:pointer;
+font-weight:600;
+background:#3b82f6;
+color:white;
 transition:.3s;
 }
 
 button:hover{
-transform:scale(1.03);
-box-shadow:0 0 20px #00ffff;
+transform:translateY(-2px);
 }
 
-.result{
-margin-top:20px;
+#result{
+margin-top:25px;
+}
+
+.card{
+background:rgba(255,255,255,.08);
+border-radius:18px;
+padding:18px;
 }
 
 video{
 width:100%;
-border-radius:15px;
+border-radius:14px;
 margin-top:15px;
 }
 
 .download{
-display:block;
-margin-top:10px;
-padding:12px;
-background:#22c55e;
-text-align:center;
-border-radius:10px;
+display:inline-block;
+margin-top:15px;
+padding:12px 22px;
+border-radius:12px;
 text-decoration:none;
-color:white;
-font-weight:bold;
+background:#22c55e;
+color:#fff;
+font-weight:600;
 }
 
-.profile{
-display:flex;
-align-items:center;
-margin-top:25px;
-padding-top:15px;
-border-top:1px solid rgba(255,255,255,.2);
+.info{
+margin-top:10px;
+font-size:14px;
+opacity:.9;
 }
 
-.profile img{
-width:55px;
-height:55px;
-border-radius:50%;
-margin-right:12px;
-border:2px solid #00ffff;
+.loading{
+text-align:center;
+padding:20px;
 }
 
-.name{
-color:white;
-font-weight:bold;
+@media(max-width:600px){
+.input-box{
+flex-direction:column;
 }
-
-.role{
-font-size:12px;
-color:#00ffff;
+button{
+width:100%;
 }
-</style>
-</head>
-
-<body>
-
-<div class="card">
-
-<div class="logo">
-⚡ HABIB DOWNLOADER PRO
-</div>
-
-<input type="text" id="url"
-placeholder="Paste Video URL">
-
-<button onclick="downloadVideo()">
-DOWNLOAD VIDEO
-</button>
-
-<div id="result" class="result"></div>
-
-<div class="profile">
-<img src="https://i.imgur.com/DSqgcku.jpeg">
-<div>
-<div class="name">SK HABIB</div>
-<div class="role">Developer & Owner</div>
-</div>
-</div>
-
-</div>
-
-<script>
+}
+</style></head>
+<body><div class="container"><div class="logo">
+<h1>🎬 Video Downloader</h1>
+<p>Facebook • Instagram • TikTok • More</p>
+</div><div class="input-box">
+<input type="text" id="videoUrl" placeholder="Paste your video link here...">
+<button onclick="downloadVideo()">Download</button>
+</div><div id="result"></div></div><script>
 async function downloadVideo(){
 
-let url=document.getElementById("url").value;
-let result=document.getElementById("result");
+const url=document.getElementById("videoUrl").value.trim();
+const result=document.getElementById("result");
 
-result.innerHTML="⏳ Processing...";
+if(!url){
+alert("Please enter a video URL");
+return;
+}
+
+result.innerHTML='<div class="loading">⏳ Fetching video...</div>';
 
 try{
 
-let res=await fetch(
+const res=await fetch(
 `https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(url)}`
 );
 
-let data=await res.json();
+const data=await res.json();
 
-let video=data.hd || data.sd;
+const video=data.hd||data.sd;
+
+if(!video){
+result.innerHTML="❌ Video not found!";
+return;
+}
 
 result.innerHTML=`
-<video controls src="${video}"></video>
+<div class="card">
+
+<h3>${data.title || "Untitled Video"}</h3>
+
+<div class="info">
+📌 Platform: ${data.platform || "Unknown"}
+</div>
+
+<video controls>
+<source src="${video}" type="video/mp4">
+</video>
+
 <a class="download" href="${video}" download>
-⬇ Download Now
+⬇ Download HD Video
 </a>
+
+</div>
 `;
 
-}catch{
-
-result.innerHTML="❌ Failed";
+}catch(err){
+console.log(err);
+result.innerHTML="❌ Failed to load video.";
+}
 
 }
-}
-</script>
-
-</body>
+</script></body>
 </html>

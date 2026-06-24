@@ -1,330 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habib Downloader</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; overflow-x: hidden; background-color: #080710; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #f5f5f7; }
-        canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; } 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Downloader</title><style>
+body{
+    font-family: Arial, sans-serif;
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+.container{
+    max-width:600px;
+    margin:auto;
+}
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-bottom:10px;
+}
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+.video-box{
+    margin-top:20px;
+}
+video{
+    width:100%;
+    border-radius:10px;
+}
+.download-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    background:#00c853;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+</style></head>
+<body><div class="container">
+    <h2>📥 Video Downloader</h2><input type="text" id="videoUrl" placeholder="Paste Facebook/TikTok/Instagram URL">
 
-        /* Aesthetic Background Glows */
-        body::before, body::after {
-            content: "";
-            position: fixed;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #1845ad, #23a6d5);
-            filter: blur(80px);
-            z-index: 0;
-            opacity: 0.25;
-        }
-        body::before { top: -10%; left: -10%; }
-        body::after { bottom: -10%; right: -10%; }
+<button onclick="downloadVideo()">Get Video</button>
 
-        /* Main Container - Premium Glassmorphism */
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px) saturate(120%);
-            -webkit-backdrop-filter: blur(20px) saturate(120%);
-            padding: 40px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            width: 90%;
-            max-width: 430px;
-        }
+<div id="result"></div>
 
-        .terminal-text { 
-            font-size: 1.25rem; 
-            font-weight: 700; 
-            margin-bottom: 30px; 
-            color: #ffffff;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, #ffffff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+</div><script>
+async function downloadVideo() {
 
-        .clear-emoji {
-            -webkit-text-fill-color: initial;
-            background: none;
-            display: inline-block;
-            letter-spacing: normal;
-        }
-        
-        input {
-            width: 100%;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            text-align: center;
-            outline: none;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+    const url = document.getElementById("videoUrl").value.trim();
+    const result = document.getElementById("result");
 
-        input:focus {
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    if(!url){
+        alert("Enter video URL");
+        return;
+    }
+
+    result.innerHTML = "⏳ Loading...";
+
+    try {
+
+        const api =
+        `https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(url)}`;
+
+        const res = await fetch(api);
+        const data = await res.json();
+
+        const video =
+            data.hd ||
+            data.sd;
+
+        if(!video){
+            result.innerHTML = "❌ Video not found";
+            return;
         }
 
-        .btn-cyber {
-            background: #ffffff;
-            color: #080710;
-            border: none;
-            border-radius: 14px;
-            padding: 15px 20px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: 600;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
+        result.innerHTML = `
+        <div class="video-box">
+            <h3>${data.title || "No Title"}</h3>
+            <p>📌 ${data.platform || "Unknown"}</p>
 
-        .btn-cyber:hover { 
-            background: #f5f5f7;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
-        }
-        
-        #result { margin-top: 25px; font-size: 0.9rem; color: #a1a1aa; }
-        video { width: 100%; margin-top: 20px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; background: #000; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
-        
-        .download-btn { 
-            display: block; 
-            margin-top: 15px; 
-            padding: 15px; 
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-            color: #ffffff; 
-            text-decoration: none; 
-            font-weight: 600; 
-            text-align: center; 
-            border: none; 
-            width: 100%; 
-            border-radius: 14px;
-            cursor: pointer; 
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
-        }
+            <video controls>
+                <source src="${video}" type="video/mp4">
+            </video>
 
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.5);
-            background: linear-gradient(135deg, #1d4ed8, #2563eb);
-        }
+            <br>
 
-        /* Creator Profile Section */
-        .operator-profile {
-            margin-top: 35px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            text-align: left;
-        }
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .profile-img {
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            object-fit: cover;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        .profile-info h4 {
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        .profile-info p {
-            color: #71717a;
-            font-size: 0.8rem;
-            margin-top: 1px;
-        }
-        
-        /* Contact Buttons Styling */
-        .profile-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 12px;
-            margin-bottom: 20px;
-        }
-        .btn-contact {
-            flex: 1;
-            display: inline-block;
-            text-align: center;
-            padding: 11px;
-            background: rgba(255, 255, 255, 0.03);
-            color: #e4e4e7;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-        }
-        .btn-contact:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Bottom Credit Text */
-        .credit-footer {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #71717a;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            margin-top: 5px;
-            animation: pulse 3s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { opacity: 0.5; }
-            to { opacity: 1; color: #a1a1aa; }
-        }
-    </style>
-</head>
-<body>
-
-    <canvas id="waterRain"></canvas>
-
-    <div class="container">
-        <div class="terminal-text">HABIB DOWNLOADER <span class="clear-emoji">📥</span></div>
-        
-        <input type="text" id="videoUrl" placeholder="Paste Video URL Here...">
-        <button class="btn-cyber" onclick="downloadVideo()">Extract Video</button>
-
-        <div id="result"></div>
-
-        <div class="operator-profile">
-            <div class="profile-header">
-                <img class="profile-img" src="https://i.imgur.com/DSqgcku.jpeg" alt="Sk Habib">
-                <div class="profile-info">
-                    <h4>Owner: Habib</h4>
-                    <p>[+] Mainframe Access Locked</p>
-                </div>
-            </div>
-            
-            <div class="profile-buttons">
-                <a class="btn-contact" href="https://wa.me/918327378209" target="_blank">🟢 WHATSAPP</a>
-                <a class="btn-contact" href="mailto:hsk467459@gmail.com">✉️ EMAIL</a>
-            </div>
-
-            <div class="credit-footer">
-                Created by 💝Sk Habib
-            </div>
+            <a class="download-btn"
+               href="${video}"
+               download>
+               ⬇ Download Video
+            </a>
         </div>
-    </div>
+        `;
 
-    <script>
-        // --- Water Droplet & Rain Animation ---
-        const canvas = document.getElementById('waterRain');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const maxDrops = 100; const drops = [];
-
-        class Droplet {
-            constructor() { this.reset(); this.y = Math.random() * canvas.height; }
-            reset() {
-                this.x = Math.random() * canvas.width; this.y = -20;
-                this.length = Math.random() * 15 + 10; this.speed = Math.random() * 4 + 3;
-                this.opacity = Math.random() * 0.2 + 0.1;
-            }
-            draw() {
-                ctx.beginPath(); ctx.strokeStyle = `rgba(174, 219, 255, ${this.opacity})`;
-                ctx.lineWidth = 1.5; ctx.moveTo(this.x, this.y); ctx.lineTo(this.x, this.y + this.length); ctx.stroke();
-            }
-            update() { this.y += this.speed; if (this.y > canvas.height) { this.reset(); } this.draw(); }
-        }
-
-        for (let i = 0; i < maxDrops; i++) { drops.push(new Droplet()); }
-        function animateWater() { ctx.clearRect(0, 0, canvas.width, canvas.height); drops.forEach(drop => drop.update()); requestAnimationFrame(animateWater); }
-        animateWater();
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
-        // --- Download Logic ---
-        async function downloadVideo() {
-            const url = document.getElementById("videoUrl").value.trim();
-            const result = document.getElementById("result");
-            if(!url) return alert("Enter valid URL");
-            
-            result.innerHTML = "⏳ Bypassing firewall & extracting...";
-            try {
-                const res = await fetch(`https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(url)}`);
-                const data = await res.json();
-                const video = data.hd || data.sd;
-                if(!video) return result.innerHTML = "❌ Video not found.";
-                
-                result.innerHTML = `
-                    <video controls src="${video}"></video>
-                    <button class="download-btn" id="dl-btn" onclick="downloadFile('${video}')">DOWNLOAD NOW</button>
-                `;
-            } catch(e) { result.innerHTML = "❌ Error securing content."; }
-        }
-
-        // --- FIXED FORCE DOWNLOAD FUNCTION WITH CORS BYPASS ---
-        async function downloadFile(videoUrl) {
-            const dlBtn = document.getElementById('dl-btn');
-            const originalText = dlBtn.innerText;
-            dlBtn.innerText = "📥 DOWNLOADING...";
-            dlBtn.disabled = true;
-
-            // CORS পলিসি বাইপাস করার জন্য একটি ফ্রি অল্টারনেটিভ প্রক্সি ইউআরএল মেক করা হয়েছে
-            const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(videoUrl);
-
-            try {
-                // প্রক্সি দিয়ে ফাইল রিকোয়েস্ট করা হচ্ছে যেন ডাউনলোড ব্লক না হয়
-                const response = await fetch(proxyUrl);
-                if (!response.ok) throw new Error("Proxy download failed");
-                
-                const blob = await response.blob();
-                const blobUrl = window.URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = blobUrl;
-                // একটি র্যান্ডম ফাইলনেম জেনারেট করা হচ্ছে
-                a.download = `Habib_DL_${Math.floor(Math.random() * 100000)}.mp4`;
-                document.body.appendChild(a);
-                a.click();
-                
-                // ক্লিনআপ মেমোরি
-                window.URL.revokeObjectURL(blobUrl);
-                document.body.removeChild(a);
-            } catch (error) {
-                // অত্যন্ত রেয়ার কেসে যদি প্রক্সি ডাউন থাকে, তবে এটি ব্যাকআপ হিসেবে নতুন ট্যাবে ফাইল ওপেন করবে
-                window.open(videoUrl, '_blank');
-            } finally {
-                dlBtn.innerText = originalText;
-                dlBtn.disabled = false;
-            }
-        }
-    </script>
-</body>
+    } catch(err){
+        console.error(err);
+        result.innerHTML = "❌ API Error";
+    }
+}
+</script></body>
 </html>

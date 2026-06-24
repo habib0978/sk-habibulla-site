@@ -1,155 +1,508 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Downloader</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .downloader-container {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-        }
-        h2 {
-            margin-bottom: 20px;
-            color: #00adb5;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #393e46;
-            border-radius: 6px;
-            background-color: #222831;
-            color: #fff;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #00adb5;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #00adb5;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        button:hover {
-            background-color: #007a80;
-        }
-        .loader {
-            display: none;
-            margin: 15px auto;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #00adb5;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .result-container {
-            margin-top: 20px;
-            word-wrap: break-word;
-        }
-        .download-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        .download-btn:hover {
-            background-color: #218838;
-        }
-        .error {
-            color: #dc3545;
-            margin-top: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eid Ul Adha Mubarak | SK HABIBULLA</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ========================= */
+/* GLOBAL STYLE       */
+/* ========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+    font-family:'Poppins', sans-serif;
+    background:#020617;
+    overflow-x:hidden;
+    color:white;
+    position:relative;
+}
+
+/* ========================= */
+/* VIDEO BACKGROUND     */
+/* ========================= */
+.bg-video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+    opacity:0.65;
+}
+
+/* ========================= */
+/* DARK OVERLAY       */
+/* ========================= */
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(2,6,23,0.25);
+    z-index:-1;
+}
+
+/* ========================= */
+/* MOON            */
+/* ========================= */
+.moon{
+    position:absolute;
+    top:70px;
+    right:80px;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    box-shadow:-20px 0 0 #fde047;
+    animation:moonGlow 4s infinite alternate;
+}
+@keyframes moonGlow{
+    from{ filter:drop-shadow(0 0 10px #fde047); }
+    to{ filter:drop-shadow(0 0 25px #fde047); }
+}
+
+/* ========================= */
+/* STARS           */
+/* ========================= */
+.stars span{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    opacity:.7;
+    animation:twinkle 3s infinite;
+}
+@keyframes twinkle{
+    0%, 100%{ opacity:.3; }
+    50%{ opacity:1; }
+}
+.stars span:nth-child(1){ top:10%; left:15%; }
+.stars span:nth-child(2){ top:20%; left:75%; }
+.stars span:nth-child(3){ top:65%; left:12%; }
+.stars span:nth-child(4){ top:78%; left:82%; }
+.stars span:nth-child(5){ top:28%; left:90%; }
+.stars span:nth-child(6){ top:40%; left:45%; }
+.stars span:nth-child(7){ top:15%; left:55%; }
+
+/* ========================= */
+/* CONTAINER         */
+/* ========================= */
+.container{
+    position:relative;
+    z-index:2;
+    width:90%;
+    max-width:900px;
+    margin:auto;
+    padding:40px 0 20px;
+}
+
+/* ========================= */
+/* CARD            */
+/* ========================= */
+.card{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:25px;
+    padding:35px;
+    text-align:center;
+    backdrop-filter:blur(5px);
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* ========================= */
+/* PROFILE           */
+/* ========================= */
+.profile{
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    overflow:hidden;
+    margin:auto;
+    border:4px solid #fde68a;
+    box-shadow:0 0 25px rgba(253,230,138,0.7);
+}
+.profile img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.eid-icon{ font-size:2rem; margin:18px 0; }
+
+.eid-title{
+    font-size:2.8rem;
+    font-weight:700;
+    color:#fde68a;
+    text-shadow:0 0 10px rgba(253,230,138,0.5);
+    font-family:'Noto Sans Bengali', sans-serif;
+}
+
+.divider{
+    width:100px;
+    height:3px;
+    background:linear-gradient(to right, #fde68a, #22c55e);
+    margin:20px auto;
+    border-radius:10px;
+}
+
+/* ====================== */
+/* VIDEO DOWNLOADER    */
+/* ====================== */
+.downloader-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    text-align: left;
+}
+.downloader-section h3 {
+    color: #fde68a;
+    margin-bottom: 15px;
+    font-family: 'Noto Sans Bengali', sans-serif;
+    font-size: 1.4rem;
+}
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.dl-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+.dl-input:focus {
+    border-color: #22c55e;
+}
+.dl-btn {
+    padding: 12px 24px;
+    border: none;
+    background: linear-gradient(45deg, #22c55e, #00ffaa);
+    color: #020617;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.dl-btn:hover {
+    transform: scale(1.03);
+}
+.dl-result {
+    margin-top: 15px;
+}
+.video-box video {
+    width: 100%;
+    max-height: 400px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background: #000;
+}
+.save-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 20px;
+    background: #2979ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ====================== */
+/* LIKE BUTTON      */
+/* ====================== */
+.like-area{ margin-top:20px; margin-bottom:20px; }
+.like-btn{
+    border:none;
+    padding:12px 28px;
+    border-radius:50px;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(45deg, #ff0055, #ff4d88);
+    box-shadow:0 5px 15px rgba(255,0,85,0.4);
+    transition:0.3s;
+}
+.like-btn:hover{ transform:scale(1.08); }
+.like-btn.liked{ background:linear-gradient(45deg, #22c55e, #00ffaa); color: #020617;}
+
+/* ========================= */
+/* MESSAGE           */
+/* ========================= */
+.message{
+    font-size:1.1rem;
+    line-height:1.9;
+    color:#f8fafc;
+    margin-bottom:30px;
+    font-family:'Noto Sans Bengali', sans-serif;
+}
+.message span{ color:#fde68a; font-weight:700; }
+
+h1{ margin-top:20px; font-size:42px; color:#fff; }
+.tag{ margin-top:10px; color:#ddd; font-size:17px; }
+
+/* ========================= */
+/* ABOUT             */
+/* ========================= */
+.about{ margin-top:30px; display:grid; gap:15px; }
+.box{
+    background:rgba(255,255,255,0.06);
+    padding:16px;
+    border-radius:14px;
+    text-align:left;
+    border:1px solid rgba(255,255,255,0.08);
+}
+.box span{ color:#ff66cc; font-weight:bold; }
+
+/* ====================== */
+/* BUTTON AREA       */
+/* ====================== */
+.buttons{
+    margin-top:35px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+}
+.btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 22px;
+    border-radius:40px;
+    text-decoration:none;
+    color:white;
+    font-size:17px;
+    font-weight:600;
+    transition:0.3s ease;
+    box-shadow:0 5px 15px rgba(0,0,0,0.25);
+}
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(255,255,255,0.2);
+}
+.fb{ background:linear-gradient(45deg, #1877f2, #00c6ff); }
+.wa{ background:linear-gradient(45deg, #00b712, #5aff15); }
+.gmail{ background:linear-gradient(45deg, #ea4335, #ff6b6b); }
+.insta{ background:linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045); }
+
+/* ========================= */
+/* SKILLS           */
+/* ========================= */
+.skills{ margin-top:35px; text-align:left; }
+.skills h2 { color: #fde68a; margin-bottom: 10px;}
+.skill{ margin:18px 0; }
+.bar{
+    width:100%;
+    height:12px;
+    background:rgba(255,255,255,0.1);
+    border-radius:20px;
+    overflow:hidden;
+}
+.fill{
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg, #ff00cc, #00ffee);
+}
+
+.footer{ margin-top:35px; color:#ccc; font-size:14px; padding-bottom:10px; }
+
+/* ========================= */
+/* RESPONSIVE         */
+/* ========================= */
+@media(max-width:600px){
+    .card{ padding:25px 18px; }
+    .eid-title{ font-size:2rem; }
+    .message{ font-size:1rem; }
+    h1{ font-size:30px; }
+    .moon{ width:70px; height:70px; top:30px; right:20px; }
+    .profile{ width:120px; height:120px; }
+    .input-group { flex-direction: column; }
+    .dl-btn { width: 100%; }
+}
+</style>
 </head>
 <body>
 
-<div class="downloader-container">
-    <h2>Video Downloader</h2>
-    <input type="text" id="videoUrl" placeholder="Paste video link here...">
-    <button onclick="downloadVideo()">Fetch Video</button>
+<video autoplay muted loop playsinline class="bg-video">
+    <source src="https://i.imgur.com/QmrI4jQ.mp4" type="video/mp4">
+</video>
 
-    <div class="loader" id="loader"></div>
-    <div class="result-container" id="result"></div>
+<audio autoplay loop id="bg-music">
+    <source src="https://i.imgur.com/uOCMmp4" type="audio/mp4">
+</audio>
+
+<div class="moon"></div>
+
+<div class="stars">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<div class="container">
+    <div class="card">
+
+        <div class="profile">
+            <img src="https://i.imgur.com/DSqgcku.jpeg" alt="WELCOME">
+        </div>
+
+        <div class="eid-icon">✨ 🌙 ✨</div>
+        <div class="eid-title">ভিডিও ডাউনলোডার</div>
+        <div class="divider"></div>
+
+        <div class="like-area">
+            <button class="like-btn" onclick="likeToggle()">
+                ❤️ Like <span id="likeCount">1</span>
+            </button>
+        </div>
+
+        <div class="downloader-section">
+            <h3>📥 সোশ্যাল মিডিয়া ভিডিও ডাউনলোডার</h3>
+            <div class="input-group">
+                <input type="text" id="videoUrl" class="dl-input" placeholder="ফেসবুক, টিকটক বা ইনস্টাগ্রাম লিংক পেস্ট করুন...">
+                <button onclick="downloadVideo()" class="dl-btn">Get Video</button>
+            </div>
+            <div id="dlResult" class="dl-result"></div>
+        </div>
+        <h1>SK HABIBULLA</h1>
+        <p class="tag">✨ Developer •SK HABIB <p>
+
+        <div class="about">
+            <div class="box">
+                <span>👤 Name :</span> SK HABIBULLA
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a class="btn fb" href="https://www.facebook.com/share/1DzT76XvnW/" target="_blank">📘 Facebook</a>
+            <a class="btn wa" href="https://wa.me/918327378209" target="_blank">💬 WhatsApp</a>
+            <a class="btn gmail" href="mailto:hsk467459@gmail.com" target="_blank">📧 Gmail</a>
+            <a class="btn insta" href="https://www.instagram.com/sk_habib_687?igsh=em5yZzF2NnJ4NGo3" target="_blank">📷 Instagram</a>
+        </div>
+
+        <div class="skills">
+            <h2>My Skills</h2>
+            <div class="skill">
+                <p>HTML</p>
+                <div class="bar"><div class="fill" style="width:95%"></div></div>
+            </div>
+            <div class="skill">
+                <p>CSS</p>
+                <div class="bar"><div class="fill" style="width:90%"></div></div>
+            </div>
+            <div class="skill">
+                <p>JavaScript</p>
+                <div class="bar"><div class="fill" style="width:80%"></div></div>
+            </div>
+            <div class="skill">
+                <p>Creative Design</p>
+                <div class="bar"><div class="fill" style="width:92%"></div></div>
+            </div>
+        </div>
+
+        <div class="footer">❤️ Made By SK HABIBULLA</div>
+
+    </div>
 </div>
 
 <script>
-    async function downloadVideo() {
-        const videoUrl = document.getElementById('videoUrl').value.trim();
-        const resultDiv = document.getElementById('result');
-        const loader = document.getElementById('loader');
+/* ====================== */
+/* VIDEO DOWNLOADER JS  */
+/* ====================== */
+async function downloadVideo() {
+    const url = document.getElementById("videoUrl").value.trim();
+    const resultDiv = document.getElementById("dlResult");
 
-        // ইনপুট ভ্যালিডেশন
-        if (!videoUrl) {
-            resultDiv.innerHTML = '<p class="error">Please paste a valid URL first!</p>';
+    if(!url){
+        alert("অনুগ্রহ করে একটি লিংক প্রবেশ করান!");
+        return;
+    }
+
+    resultDiv.innerHTML = "<p style='color:#fde68a;'>⏳ লোড হচ্ছে, অপেক্ষা করুন...</p>";
+
+    try {
+        const api = `https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(url)}`;
+        const res = await fetch(api);
+        const data = await res.json();
+
+        const videoUrl = data.hd || data.sd;
+
+        if(!videoUrl){
+            resultDiv.innerHTML = "<p style='color:#ff4d88;'>❌ ভিডিও পাওয়া যায়নি বা লিংকটি সঠিক নয়!</p>";
             return;
         }
 
-        // লোডার চালু করা এবং আগের রেজাল্ট ক্লিয়ার করা
-        loader.style.display = 'block';
-        resultDiv.innerHTML = '';
-
-        // API URL তৈরি করা
-        const apiUrl = `https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(videoUrl)}`;
-
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            loader.style.display = 'none';
-
-            // API রেসপন্স চেক করা (আপনার API এর JSON স্ট্রাকচার অনুযায়ী এটি পরিবর্তন করতে হতে পারে)
-            if (data && (data.result || data.url || data.downloadUrl)) {
-                // এখানে ধরে নেওয়া হয়েছে API রেসপন্সে 'result' বা 'url' ফিল্ডে ডাউনলোড লিঙ্ক থাকে
-                const downloadLink = data.result || data.url || data.downloadUrl;
-                
-                resultDiv.innerHTML = `
-                    <p style="color: #28a745;">Video fetched successfully!</p>
-                    <a href="${downloadLink}" target="_blank" class="download-btn" download>Download Video</a>
-                `;
-            } else {
-                resultDiv.innerHTML = '<p class="error">Failed to get download link. Check the URL or API response.</p>';
-            }
-
-        } catch (error) {
-            loader.style.display = 'none';
-            resultDiv.innerHTML = '<p class="error">An error occurred while fetching the video. Please try again.</p>';
-            console.error('Error:', error);
-        }
+        resultDiv.innerHTML = `
+        <div class="video-box">
+            <h4 style="color:#00ffaa; margin-bottom:5px;">🎥 ${data.title || 'ভিডিও রেডি'}</h4>
+            <p style="font-size:13px; color:#ccc;">প্লাটফর্ম: ${data.platform || 'Unknown'}</p>
+            <video controls>
+                <source src="${videoUrl}" type="video/mp4">
+                আপনার ব্রাউজার ভিডিও সাপোর্ট করে না।
+            </video>
+            <br>
+            <a class="save-btn" href="${videoUrl}" target="_blank" rel="noopener noreferrer">🔗 ওপেন লিংক (ডাউনলোড করুন)</a>
+        </div>
+        `;
+    } catch(err) {
+        console.error(err);
+        resultDiv.innerHTML = "<p style='color:#ff4d88;'>❌ এপিআই ত্রুটি! আবার চেষ্টা করুন।</p>";
     }
+}
+
+/* ====================== */
+/* LIKE BUTTON       */
+/* ====================== */
+let liked = false;
+let count = 1;
+
+function likeToggle(){
+    const btn = document.querySelector(".like-btn");
+    if(!liked){
+        count++;
+        btn.classList.add("liked");
+        btn.innerHTML = `💚 Liked <span id="likeCount">${count}</span>`;
+        liked = true;
+    }else{
+        count--;
+        btn.classList.remove("liked");
+        btn.innerHTML = `❤️ Like <span id="likeCount">${count}</span>`;
+        liked = false;
+    }
+}
+
+/* ====================== */
+/* AUTO PLAY AUDIO     */
+/* ====================== */
+window.addEventListener("load", () => {
+    const music = document.getElementById("bg-music");
+    const playPromise = music.play();
+    if(playPromise !== undefined){
+        playPromise.catch(() => {
+            document.body.addEventListener("click", () => {
+                music.play();
+            }, { once:true });
+        });
+    }
+});
 </script>
 
 </body>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Video Downloader</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap');
+    
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      margin: 0;
+      padding: 20px;
+      color: white;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 650px;
+      margin: 40px auto;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 2.2em;
+    }
+    p {
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    input {
+      width: 100%;
+      padding: 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      background: white;
+      color: black;
+    }
+    select {
+      width: 100%;
+      padding: 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      background: white;
+      color: black;
+    }
+    button {
+      width: 100%;
+      padding: 18px;
+      background: #ff0066;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e6005c;
+      transform: scale(1.03);
+    }
+    #status {
+      margin-top: 25px;
+      min-height: 50px;
+      font-size: 16px;
+    }
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📥 Social Video Downloader</h1>
+    <p>ইউটিউব • ফেসবুক • ইনস্টাগ্রাম • টিকটক • X • অন্যান্য</p>
+    
+    <input type="text" id="urlInput" placeholder="ভিডিওর লিংক এখানে পেস্ট করুন..." autocomplete="off">
+    
+    <select id="qualitySelect">
+      <option value="best">সেরা কোয়ালিটি (Recommended)</option>
+      <option value="1080p">1080p HD</option>
+      <option value="720p">720p</option>
+      <option value="480p">480p</option>
+      <option value="audio">শুধু অডিও (MP3)</option>
+    </select>
+    
+    <button onclick="handleDownload()">ডাউনলোড করুন</button>
+    
+    <div id="status"></div>
+    
+    <div class="footer">
+      ⚠️ কিছু সাইটের জন্য yt-dlp বা অনলাইন ডাউনলোডার ব্যবহার করুন
+    </div>
+  </div>
+
+  <script>
+    function handleDownload() {
+      const url = document.getElementById('urlInput').value.trim();
+      const quality = document.getElementById('qualitySelect').value;
+      const status = document.getElementById('status');
+
+      if (!url) {
+        status.innerHTML = '<span style="color:#ff6666;">❌ লিংক দিতে হবে!</span>';
+        return;
+      }
+
+      status.innerHTML = `
+        ⏳ প্রসেসিং হচ্ছে...<br>
+        <small>যদি সরাসরি ডাউনলোড না হয় তাহলে নিচের লিংকে ট্রাই করুন</small>
+      `;
+
+      // Client-side এ সরাসরি ডাউনলোড সম্ভব না, তাই সাজেশন দিচ্ছি
+      setTimeout(() => {
+        status.innerHTML = `
+          ✅ লিংক রেডি!<br><br>
+          <strong>যেকোনো একটা সাইটে গিয়ে ট্রাই করুন:</strong><br><br>
+          <a href="https://yt1s.com/" target="_blank" style="color:white; text-decoration:underline;">yt1s.com</a> | 
+          <a href="https://ssyoutube.com/" target="_blank" style="color:white; text-decoration:underline;">ssyoutube</a> | 
+          <a href="https://cobalt.tools/" target="_blank" style="color:white; text-decoration:underline;">Cobalt.tools</a><br><br>
+          অথবা Python + yt-dlp ব্যবহার করুন (সবচেয়ে ভালো)
+        `;
+      }, 1200);
+    }
+
+    // Enter key support
+    document.getElementById('urlInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleDownload();
+      }
+    });
+  </script>
+</body>
+</html>

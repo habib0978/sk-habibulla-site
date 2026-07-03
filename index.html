@@ -1,225 +1,250 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ভিডিও ডাউনলোডার</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px 30px;
-        }
-        
-        h1 {
-            text-align: center;
-            color: #4c51bf;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
-        }
-        
-        input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        button {
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-        
-        .status {
-            margin: 20px 0;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        .result {
-            margin-top: 30px;
-        }
-        
-        video {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-        }
-        
-        .download-btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            background: #10b981;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-        
-        .platforms {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .platforms ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 0;
-            list-style: none;
-        }
-        
-        .platforms li {
-            background: #f1f5f9;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚀 SHAON Video Downloader</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0f0c29;
+      background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 30px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      animation: slideUp 0.6s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logo {
+      font-size: 50px;
+      margin-bottom: 10px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    h2 {
+      background: linear-gradient(45deg, #00ff88, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+    .input-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 15px;
+      color: #fff;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #00ff88;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    input::placeholder { color: #777; }
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(45deg, #00ff88, #00ffff);
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
+    }
+    button:active { transform: translateY(0); }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    #result { margin-top: 25px; }
+    .loading {
+      color: #ffaa00;
+      font-weight: 500;
+    }
+    .loader {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid #00ff88;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .error {
+      color: #ff5555;
+      background: rgba(255, 85, 85, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 3px solid #ff5555;
+    }
+    .success-box {
+      background: rgba(0, 255, 136, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .success-title {
+      color: #00ff88;
+      font-weight: 600;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    .download-btn {
+      display: inline-block;
+      background: linear-gradient(45deg, #0088ff, #00ffff);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+    .download-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 136, 255, 0.4);
+    }
+    .video-info {
+      color: #ccc;
+      font-size: 13px;
+      margin-top: 12px;
+      word-break: break-all;
+    }
+    .platforms {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+      opacity: 0.6;
+      font-size: 12px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎥 ভিডিও ডাউনলোডার</h1>
-        <p class="subtitle">সোশ্যাল মিডিয়া থেকে ভিডিও ডাউনলোড করুন (TikTok, FB, IG, YT ইত্যাদি)</p>
-        
-        <div class="input-group">
-            <input type="text" id="videoUrl" placeholder="ভিডিও লিংক পেস্ট করুন..." />
-            <button onclick="downloadVideo()">ডাউনলোড</button>
-        </div>
-        
-        <div id="status" class="status"></div>
-        
-        <div id="result" class="result" style="display: none;">
-            <video id="preview" controls></video>
-            <a id="downloadLink" class="download-btn" download>⬇️ ভিডিও ডাউনলোড করুন</a>
-        </div>
-        
-        <div class="platforms">
-            <strong>সাপোর্টেড প্ল্যাটফর্ম:</strong>
-            <ul>
-                <li>TikTok</li>
-                <li>Facebook</li>
-                <li>Instagram</li>
-                <li>YouTube</li>
-                <li>Twitter/X</li>
-                <li>Threads</li>
-                <li>আরও অনেক...</li>
-            </ul>
-        </div>
+  <div class="container">
+    <div class="logo">🚀</div>
+    <h2>HABIB Downloader</h2>
+    <p class="subtitle">YouTube • TikTok • Instagram • Facebook</p>
+    
+    <div class="input-box">
+      <input type="text" id="videoUrl" placeholder="Paste video link here...">
     </div>
+    <button id="downloadBtn" onclick="downloadVideo()">Download Now</button>
+    
+    <div id="result"></div>
+    
+    <div class="platforms">
+      <span>📹 MP4</span>
+      <span>⚡ Fast</span>
+      <span>🔒 Safe</span>
+    </div>
+  </div>
 
-    <script>
-        const API_BASE = "https://mahmud69-alldl.onrender.com";
-        
-        async function downloadVideo() {
-            const urlInput = document.getElementById('videoUrl');
-            const statusEl = document.getElementById('status');
-            const resultEl = document.getElementById('result');
-            const videoEl = document.getElementById('preview');
-            const downloadLink = document.getElementById('downloadLink');
-            
-            const videoUrl = urlInput.value.trim();
-            
-            if (!videoUrl || !videoUrl.startsWith('http')) {
-                statusEl.style.background = '#fee2e2';
-                statusEl.style.color = '#ef4444';
-                statusEl.textContent = '❌ সঠিক ভিডিও লিংক দিন!';
-                return;
-            }
-            
-            // Reset UI
-            statusEl.style.background = '#fef3c7';
-            statusEl.style.color = '#d97706';
-            statusEl.textContent = '⏳ প্রসেসিং চলছে...';
-            resultEl.style.display = 'none';
-            
-            try {
-                const response = await fetch(`\( {API_BASE}/api/download?url= \){encodeURIComponent(videoUrl)}`);
-                const data = await response.json();
-                
-                if (data.result) {
-                    // Show preview and download button
-                    videoEl.src = data.result;
-                    downloadLink.href = data.result;
-                    downloadLink.download = `video_${Date.now()}.mp4`;
-                    
-                    resultEl.style.display = 'block';
-                    statusEl.textContent = '✅ সফল হয়েছে!';
-                    statusEl.style.background = '#d1fae5';
-                    statusEl.style.color = '#10b981';
-                } else {
-                    throw new Error('ভিডিও লিংক পাওয়া যায়নি');
-                }
-            } catch (error) {
-                console.error(error);
-                statusEl.style.background = '#fee2e2';
-                statusEl.style.color = '#ef4444';
-                statusEl.textContent = '❌ এরর হয়েছে! অন্য লিংক চেষ্টা করুন।';
-            }
-        }
-        
-        // Allow Enter key to trigger download
-        document.getElementById('videoUrl').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                downloadVideo();
-            }
+  <script>
+    async function downloadVideo() {
+      const url = document.getElementById('videoUrl').value.trim();
+      const resultDiv = document.getElementById('result');
+      const btn = document.getElementById('downloadBtn');
+      
+      if (!url.startsWith('https://')) {
+        resultDiv.innerHTML = '<div class="error">❌ Please enter a valid URL</div>';
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.innerHTML = 'Processing...';
+      resultDiv.innerHTML = '<div class="loading">☢️ Fetching video data<div class="loader"></div></div>';
+      
+      try {
+        const api = `https://api.cobalt.tools/api/json`;
+        const res = await fetch(api, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ url: url })
         });
-    </script>
+        
+        const data = await res.json();
+        
+        if (data.status === 'success' || data.status === 'stream' || data.status === 'redirect') {
+          resultDiv.innerHTML = `
+            <div class="success-box">
+              <div class="success-title">✅ Download Ready!</div>
+              <a href="${data.url}" class="download-btn" target="_blank" download>⬇️ Download Video</a>
+              <div class="video-info">${data.text || 'High Quality Video'}</div>
+            </div>
+          `;
+        } else {
+          throw new Error(data.text || 'Link not supported or video is private');
+        }
+      } catch (err) {
+        resultDiv.innerHTML = `<div class="error">❌ Error: ${err.message}</div>`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Download Now';
+      }
+    }
+
+    // Enter key support
+    document.getElementById('videoUrl').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') downloadVideo();
+    });
+  </script>
 </body>
 </html>

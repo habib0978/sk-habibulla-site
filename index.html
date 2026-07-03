@@ -1,508 +1,197 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eid Ul Adha Mubarak | SK HABIBULLA</title>
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+<title>Video Downloader</title>
 
 <style>
-/* ========================= */
-/* GLOBAL STYLE       */
-/* ========================= */
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
+
 body{
-    font-family:'Poppins', sans-serif;
-    background:#020617;
-    overflow-x:hidden;
-    color:white;
-    position:relative;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
 }
 
-/* ========================= */
-/* VIDEO BACKGROUND     */
-/* ========================= */
-.bg-video{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
-    opacity:0.65;
-}
-
-/* ========================= */
-/* DARK OVERLAY       */
-/* ========================= */
-body::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(2,6,23,0.25);
-    z-index:-1;
-}
-
-/* ========================= */
-/* MOON            */
-/* ========================= */
-.moon{
-    position:absolute;
-    top:70px;
-    right:80px;
-    width:100px;
-    height:100px;
-    border-radius:50%;
-    box-shadow:-20px 0 0 #fde047;
-    animation:moonGlow 4s infinite alternate;
-}
-@keyframes moonGlow{
-    from{ filter:drop-shadow(0 0 10px #fde047); }
-    to{ filter:drop-shadow(0 0 25px #fde047); }
-}
-
-/* ========================= */
-/* STARS           */
-/* ========================= */
-.stars span{
-    position:absolute;
-    width:3px;
-    height:3px;
-    background:white;
-    border-radius:50%;
-    opacity:.7;
-    animation:twinkle 3s infinite;
-}
-@keyframes twinkle{
-    0%, 100%{ opacity:.3; }
-    50%{ opacity:1; }
-}
-.stars span:nth-child(1){ top:10%; left:15%; }
-.stars span:nth-child(2){ top:20%; left:75%; }
-.stars span:nth-child(3){ top:65%; left:12%; }
-.stars span:nth-child(4){ top:78%; left:82%; }
-.stars span:nth-child(5){ top:28%; left:90%; }
-.stars span:nth-child(6){ top:40%; left:45%; }
-.stars span:nth-child(7){ top:15%; left:55%; }
-
-/* ========================= */
-/* CONTAINER         */
-/* ========================= */
-.container{
-    position:relative;
-    z-index:2;
-    width:90%;
-    max-width:900px;
-    margin:auto;
-    padding:40px 0 20px;
-}
-
-/* ========================= */
-/* CARD            */
-/* ========================= */
-.card{
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:25px;
-    padding:35px;
-    text-align:center;
-    backdrop-filter:blur(5px);
-    box-shadow:0 5px 20px rgba(0,0,0,0.2);
-}
-
-/* ========================= */
-/* PROFILE           */
-/* ========================= */
-.profile{
-    width:170px;
-    height:170px;
-    border-radius:50%;
-    overflow:hidden;
-    margin:auto;
-    border:4px solid #fde68a;
-    box-shadow:0 0 25px rgba(253,230,138,0.7);
-}
-.profile img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.eid-icon{ font-size:2rem; margin:18px 0; }
-
-.eid-title{
-    font-size:2.8rem;
-    font-weight:700;
-    color:#fde68a;
-    text-shadow:0 0 10px rgba(253,230,138,0.5);
-    font-family:'Noto Sans Bengali', sans-serif;
-}
-
-.divider{
-    width:100px;
-    height:3px;
-    background:linear-gradient(to right, #fde68a, #22c55e);
-    margin:20px auto;
-    border-radius:10px;
-}
-
-/* ====================== */
-/* VIDEO DOWNLOADER    */
-/* ====================== */
-.downloader-section {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 25px;
-    margin: 30px 0;
-    text-align: left;
-}
-.downloader-section h3 {
-    color: #fde68a;
-    margin-bottom: 15px;
-    font-family: 'Noto Sans Bengali', sans-serif;
-    font-size: 1.4rem;
-}
-.input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-.dl-input {
-    flex: 1;
-    padding: 12px 15px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.4);
-    color: white;
-    border-radius: 8px;
-    font-size: 15px;
-    outline: none;
-}
-.dl-input:focus {
-    border-color: #22c55e;
-}
-.dl-btn {
-    padding: 12px 24px;
-    border: none;
-    background: linear-gradient(45deg, #22c55e, #00ffaa);
-    color: #020617;
-    font-weight: 700;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.dl-btn:hover {
-    transform: scale(1.03);
-}
-.dl-result {
-    margin-top: 15px;
-}
-.video-box video {
-    width: 100%;
-    max-height: 400px;
-    border-radius: 10px;
-    margin-top: 10px;
-    background: #000;
-}
-.save-btn {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 10px 20px;
-    background: #2979ff;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-/* ====================== */
-/* LIKE BUTTON      */
-/* ====================== */
-.like-area{ margin-top:20px; margin-bottom:20px; }
-.like-btn{
-    border:none;
-    padding:12px 28px;
-    border-radius:50px;
-    font-size:18px;
-    font-weight:600;
-    cursor:pointer;
-    color:white;
-    background:linear-gradient(45deg, #ff0055, #ff4d88);
-    box-shadow:0 5px 15px rgba(255,0,85,0.4);
-    transition:0.3s;
-}
-.like-btn:hover{ transform:scale(1.08); }
-.like-btn.liked{ background:linear-gradient(45deg, #22c55e, #00ffaa); color: #020617;}
-
-/* ========================= */
-/* MESSAGE           */
-/* ========================= */
-.message{
-    font-size:1.1rem;
-    line-height:1.9;
-    color:#f8fafc;
-    margin-bottom:30px;
-    font-family:'Noto Sans Bengali', sans-serif;
-}
-.message span{ color:#fde68a; font-weight:700; }
-
-h1{ margin-top:20px; font-size:42px; color:#fff; }
-.tag{ margin-top:10px; color:#ddd; font-size:17px; }
-
-/* ========================= */
-/* ABOUT             */
-/* ========================= */
-.about{ margin-top:30px; display:grid; gap:15px; }
 .box{
-    background:rgba(255,255,255,0.06);
-    padding:16px;
-    border-radius:14px;
-    text-align:left;
-    border:1px solid rgba(255,255,255,0.08);
+    width:95%;
+    max-width:420px;
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
-.box span{ color:#ff66cc; font-weight:bold; }
 
-/* ====================== */
-/* BUTTON AREA       */
-/* ====================== */
-.buttons{
-    margin-top:35px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:12px;
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#2563eb;
 }
-.btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:12px 22px;
-    border-radius:40px;
-    text-decoration:none;
-    color:white;
-    font-size:17px;
-    font-weight:600;
-    transition:0.3s ease;
-    box-shadow:0 5px 15px rgba(0,0,0,0.25);
-}
-.btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 8px 20px rgba(255,255,255,0.2);
-}
-.fb{ background:linear-gradient(45deg, #1877f2, #00c6ff); }
-.wa{ background:linear-gradient(45deg, #00b712, #5aff15); }
-.gmail{ background:linear-gradient(45deg, #ea4335, #ff6b6b); }
-.insta{ background:linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045); }
 
-/* ========================= */
-/* SKILLS           */
-/* ========================= */
-.skills{ margin-top:35px; text-align:left; }
-.skills h2 { color: #fde68a; margin-bottom: 10px;}
-.skill{ margin:18px 0; }
-.bar{
+input{
+    width:100%;
+    padding:14px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+    margin-bottom:15px;
+}
+
+input:focus{
+    border-color:#2563eb;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.progress{
     width:100%;
     height:12px;
-    background:rgba(255,255,255,0.1);
+    background:#ddd;
     border-radius:20px;
+    margin-top:20px;
     overflow:hidden;
+    display:none;
 }
-.fill{
+
+.bar{
+    width:0%;
     height:100%;
-    border-radius:20px;
-    background:linear-gradient(90deg, #ff00cc, #00ffee);
+    background:#22c55e;
+    transition:.3s;
 }
 
-.footer{ margin-top:35px; color:#ccc; font-size:14px; padding-bottom:10px; }
-
-/* ========================= */
-/* RESPONSIVE         */
-/* ========================= */
-@media(max-width:600px){
-    .card{ padding:25px 18px; }
-    .eid-title{ font-size:2rem; }
-    .message{ font-size:1rem; }
-    h1{ font-size:30px; }
-    .moon{ width:70px; height:70px; top:30px; right:20px; }
-    .profile{ width:120px; height:120px; }
-    .input-group { flex-direction: column; }
-    .dl-btn { width: 100%; }
+.status{
+    text-align:center;
+    margin-top:12px;
+    font-size:15px;
+    color:#555;
 }
 </style>
 </head>
+
 <body>
 
-<video autoplay muted loop playsinline class="bg-video">
-    <source src="https://i.imgur.com/QmrI4jQ.mp4" type="video/mp4">
-</video>
+<div class="box">
 
-<audio autoplay loop id="bg-music">
-    <source src="https://i.imgur.com/uOCMmp4" type="audio/mp4">
-</audio>
+<h2>🎬 Video Downloader</h2>
 
-<div class="moon"></div>
+<input
+id="url"
+type="text"
+placeholder="Paste video link...">
 
-<div class="stars">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+<button onclick="downloadVideo()">
+Download Video
+</button>
+
+<div class="progress" id="progress">
+<div class="bar" id="bar"></div>
 </div>
 
-<div class="container">
-    <div class="card">
+<div class="status" id="status"></div>
 
-        <div class="profile">
-            <img src="https://i.imgur.com/DSqgcku.jpeg" alt="WELCOME">
-        </div>
-
-        <div class="eid-icon">✨ 🌙 ✨</div>
-        <div class="eid-title">ভিডিও ডাউনলোডার</div>
-        <div class="divider"></div>
-
-        <div class="like-area">
-            <button class="like-btn" onclick="likeToggle()">
-                ❤️ Like <span id="likeCount">1</span>
-            </button>
-        </div>
-
-        <div class="downloader-section">
-            <h3>📥 সোশ্যাল মিডিয়া ভিডিও ডাউনলোডার</h3>
-            <div class="input-group">
-                <input type="text" id="videoUrl" class="dl-input" placeholder="ফেসবুক, টিকটক বা ইনস্টাগ্রাম লিংক পেস্ট করুন...">
-                <button onclick="downloadVideo()" class="dl-btn">Get Video</button>
-            </div>
-            <div id="dlResult" class="dl-result"></div>
-        </div>
-        <h1>SK HABIBULLA</h1>
-        <p class="tag">✨ Developer •SK HABIB <p>
-
-        <div class="about">
-            <div class="box">
-                <span>👤 Name :</span> SK HABIBULLA
-            </div>
-        </div>
-
-        <div class="buttons">
-            <a class="btn fb" href="https://www.facebook.com/share/1DzT76XvnW/" target="_blank">📘 Facebook</a>
-            <a class="btn wa" href="https://wa.me/918327378209" target="_blank">💬 WhatsApp</a>
-            <a class="btn gmail" href="mailto:hsk467459@gmail.com" target="_blank">📧 Gmail</a>
-            <a class="btn insta" href="https://www.instagram.com/sk_habib_687?igsh=em5yZzF2NnJ4NGo3" target="_blank">📷 Instagram</a>
-        </div>
-
-        <div class="skills">
-            <h2>My Skills</h2>
-            <div class="skill">
-                <p>HTML</p>
-                <div class="bar"><div class="fill" style="width:95%"></div></div>
-            </div>
-            <div class="skill">
-                <p>CSS</p>
-                <div class="bar"><div class="fill" style="width:90%"></div></div>
-            </div>
-            <div class="skill">
-                <p>JavaScript</p>
-                <div class="bar"><div class="fill" style="width:80%"></div></div>
-            </div>
-            <div class="skill">
-                <p>Creative Design</p>
-                <div class="bar"><div class="fill" style="width:92%"></div></div>
-            </div>
-        </div>
-
-        <div class="footer">❤️ Made By SK HABIBULLA</div>
-
-    </div>
 </div>
 
 <script>
-/* ====================== */
-/* VIDEO DOWNLOADER JS  */
-/* ====================== */
-async function downloadVideo() {
-    const url = document.getElementById("videoUrl").value.trim();
-    const resultDiv = document.getElementById("dlResult");
 
-    if(!url){
-        alert("অনুগ্রহ করে একটি লিংক প্রবেশ করান!");
-        return;
-    }
+const API="http://localhost:3001";
 
-    resultDiv.innerHTML = "<p style='color:#fde68a;'>⏳ লোড হচ্ছে, অপেক্ষা করুন...</p>";
+async function downloadVideo(){
 
-    try {
-        const api = `https://mahabub-apis.fun/mahabub/dl?url=${encodeURIComponent(url)}`;
-        const res = await fetch(api);
-        const data = await res.json();
+const url=document.getElementById("url").value;
 
-        const videoUrl = data.hd || data.sd;
-
-        if(!videoUrl){
-            resultDiv.innerHTML = "<p style='color:#ff4d88;'>❌ ভিডিও পাওয়া যায়নি বা লিংকটি সঠিক নয়!</p>";
-            return;
-        }
-
-        resultDiv.innerHTML = `
-        <div class="video-box">
-            <h4 style="color:#00ffaa; margin-bottom:5px;">🎥 ${data.title || 'ভিডিও রেডি'}</h4>
-            <p style="font-size:13px; color:#ccc;">প্লাটফর্ম: ${data.platform || 'Unknown'}</p>
-            <video controls>
-                <source src="${videoUrl}" type="video/mp4">
-                আপনার ব্রাউজার ভিডিও সাপোর্ট করে না।
-            </video>
-            <br>
-            <a class="save-btn" href="${videoUrl}" target="_blank" rel="noopener noreferrer">🔗 ওপেন লিংক (ডাউনলোড করুন)</a>
-        </div>
-        `;
-    } catch(err) {
-        console.error(err);
-        resultDiv.innerHTML = "<p style='color:#ff4d88;'>❌ এপিআই ত্রুটি! আবার চেষ্টা করুন।</p>";
-    }
+if(!url){
+alert("Paste a video link.");
+return;
 }
 
-/* ====================== */
-/* LIKE BUTTON       */
-/* ====================== */
-let liked = false;
-let count = 1;
+document.getElementById("progress").style.display="block";
+document.getElementById("status").innerHTML="Starting...";
 
-function likeToggle(){
-    const btn = document.querySelector(".like-btn");
-    if(!liked){
-        count++;
-        btn.classList.add("liked");
-        btn.innerHTML = `💚 Liked <span id="likeCount">${count}</span>`;
-        liked = true;
-    }else{
-        count--;
-        btn.classList.remove("liked");
-        btn.innerHTML = `❤️ Like <span id="likeCount">${count}</span>`;
-        liked = false;
-    }
-}
+const res=await fetch(API+"/download/video",{
 
-/* ====================== */
-/* AUTO PLAY AUDIO     */
-/* ====================== */
-window.addEventListener("load", () => {
-    const music = document.getElementById("bg-music");
-    const playPromise = music.play();
-    if(playPromise !== undefined){
-        playPromise.catch(() => {
-            document.body.addEventListener("click", () => {
-                music.play();
-            }, { once:true });
-        });
-    }
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+url:url,
+
+quality:"720",
+
+extension:"mp4"
+
+})
+
 });
+
+const data=await res.json();
+
+const es=new EventSource(API+"/download/"+data.downloadId+"/progress");
+
+es.onmessage=(e)=>{
+
+const msg=JSON.parse(e.data);
+
+if(msg.type==="progress"){
+
+document.getElementById("bar").style.width=
+msg.data.percentage+"%";
+
+document.getElementById("status").innerHTML=
+msg.data.percentage+"% Downloading...";
+
+}
+
+if(msg.type==="complete"){
+
+document.getElementById("status").innerHTML=
+"✅ Download Ready";
+
+window.location.href=msg.data;
+
+es.close();
+
+}
+
+if(msg.type==="error"){
+
+alert(msg.message);
+
+es.close();
+
+}
+
+};
+
+}
+
 </script>
 
 </body>

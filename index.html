@@ -1,145 +1,225 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Video Downloader</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap');
-    
-    body {
-      font-family: 'Hind Siliguri', sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      margin: 0;
-      padding: 20px;
-      color: white;
-      min-height: 100vh;
-    }
-    .container {
-      max-width: 650px;
-      margin: 40px auto;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 40px 30px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    h1 {
-      margin: 0 0 10px 0;
-      font-size: 2.2em;
-    }
-    p {
-      margin-bottom: 30px;
-      opacity: 0.9;
-    }
-    input {
-      width: 100%;
-      padding: 18px;
-      font-size: 16px;
-      border: none;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      background: white;
-      color: black;
-    }
-    select {
-      width: 100%;
-      padding: 18px;
-      font-size: 16px;
-      border: none;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      background: white;
-      color: black;
-    }
-    button {
-      width: 100%;
-      padding: 18px;
-      background: #ff0066;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #e6005c;
-      transform: scale(1.03);
-    }
-    #status {
-      margin-top: 25px;
-      min-height: 50px;
-      font-size: 16px;
-    }
-    .footer {
-      margin-top: 30px;
-      font-size: 14px;
-      opacity: 0.8;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ভিডিও ডাউনলোডার</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4c51bf;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .status {
+            margin: 20px 0;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .result {
+            margin-top: 30px;
+        }
+        
+        video {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #10b981;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .platforms {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .platforms ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .platforms li {
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📥 Social Video Downloader</h1>
-    <p>ইউটিউব • ফেসবুক • ইনস্টাগ্রাম • টিকটক • X • অন্যান্য</p>
-    
-    <input type="text" id="urlInput" placeholder="ভিডিওর লিংক এখানে পেস্ট করুন..." autocomplete="off">
-    
-    <select id="qualitySelect">
-      <option value="best">সেরা কোয়ালিটি (Recommended)</option>
-      <option value="1080p">1080p HD</option>
-      <option value="720p">720p</option>
-      <option value="480p">480p</option>
-      <option value="audio">শুধু অডিও (MP3)</option>
-    </select>
-    
-    <button onclick="handleDownload()">ডাউনলোড করুন</button>
-    
-    <div id="status"></div>
-    
-    <div class="footer">
-      ⚠️ কিছু সাইটের জন্য yt-dlp বা অনলাইন ডাউনলোডার ব্যবহার করুন
+    <div class="container">
+        <h1>🎥 ভিডিও ডাউনলোডার</h1>
+        <p class="subtitle">সোশ্যাল মিডিয়া থেকে ভিডিও ডাউনলোড করুন (TikTok, FB, IG, YT ইত্যাদি)</p>
+        
+        <div class="input-group">
+            <input type="text" id="videoUrl" placeholder="ভিডিও লিংক পেস্ট করুন..." />
+            <button onclick="downloadVideo()">ডাউনলোড</button>
+        </div>
+        
+        <div id="status" class="status"></div>
+        
+        <div id="result" class="result" style="display: none;">
+            <video id="preview" controls></video>
+            <a id="downloadLink" class="download-btn" download>⬇️ ভিডিও ডাউনলোড করুন</a>
+        </div>
+        
+        <div class="platforms">
+            <strong>সাপোর্টেড প্ল্যাটফর্ম:</strong>
+            <ul>
+                <li>TikTok</li>
+                <li>Facebook</li>
+                <li>Instagram</li>
+                <li>YouTube</li>
+                <li>Twitter/X</li>
+                <li>Threads</li>
+                <li>আরও অনেক...</li>
+            </ul>
+        </div>
     </div>
-  </div>
 
-  <script>
-    function handleDownload() {
-      const url = document.getElementById('urlInput').value.trim();
-      const quality = document.getElementById('qualitySelect').value;
-      const status = document.getElementById('status');
-
-      if (!url) {
-        status.innerHTML = '<span style="color:#ff6666;">❌ লিংক দিতে হবে!</span>';
-        return;
-      }
-
-      status.innerHTML = `
-        ⏳ প্রসেসিং হচ্ছে...<br>
-        <small>যদি সরাসরি ডাউনলোড না হয় তাহলে নিচের লিংকে ট্রাই করুন</small>
-      `;
-
-      // Client-side এ সরাসরি ডাউনলোড সম্ভব না, তাই সাজেশন দিচ্ছি
-      setTimeout(() => {
-        status.innerHTML = `
-          ✅ লিংক রেডি!<br><br>
-          <strong>যেকোনো একটা সাইটে গিয়ে ট্রাই করুন:</strong><br><br>
-          <a href="https://yt1s.com/" target="_blank" style="color:white; text-decoration:underline;">yt1s.com</a> | 
-          <a href="https://ssyoutube.com/" target="_blank" style="color:white; text-decoration:underline;">ssyoutube</a> | 
-          <a href="https://cobalt.tools/" target="_blank" style="color:white; text-decoration:underline;">Cobalt.tools</a><br><br>
-          অথবা Python + yt-dlp ব্যবহার করুন (সবচেয়ে ভালো)
-        `;
-      }, 1200);
-    }
-
-    // Enter key support
-    document.getElementById('urlInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        handleDownload();
-      }
-    });
-  </script>
+    <script>
+        const API_BASE = "https://mahmud69-alldl.onrender.com";
+        
+        async function downloadVideo() {
+            const urlInput = document.getElementById('videoUrl');
+            const statusEl = document.getElementById('status');
+            const resultEl = document.getElementById('result');
+            const videoEl = document.getElementById('preview');
+            const downloadLink = document.getElementById('downloadLink');
+            
+            const videoUrl = urlInput.value.trim();
+            
+            if (!videoUrl || !videoUrl.startsWith('http')) {
+                statusEl.style.background = '#fee2e2';
+                statusEl.style.color = '#ef4444';
+                statusEl.textContent = '❌ সঠিক ভিডিও লিংক দিন!';
+                return;
+            }
+            
+            // Reset UI
+            statusEl.style.background = '#fef3c7';
+            statusEl.style.color = '#d97706';
+            statusEl.textContent = '⏳ প্রসেসিং চলছে...';
+            resultEl.style.display = 'none';
+            
+            try {
+                const response = await fetch(`\( {API_BASE}/api/download?url= \){encodeURIComponent(videoUrl)}`);
+                const data = await response.json();
+                
+                if (data.result) {
+                    // Show preview and download button
+                    videoEl.src = data.result;
+                    downloadLink.href = data.result;
+                    downloadLink.download = `video_${Date.now()}.mp4`;
+                    
+                    resultEl.style.display = 'block';
+                    statusEl.textContent = '✅ সফল হয়েছে!';
+                    statusEl.style.background = '#d1fae5';
+                    statusEl.style.color = '#10b981';
+                } else {
+                    throw new Error('ভিডিও লিংক পাওয়া যায়নি');
+                }
+            } catch (error) {
+                console.error(error);
+                statusEl.style.background = '#fee2e2';
+                statusEl.style.color = '#ef4444';
+                statusEl.textContent = '❌ এরর হয়েছে! অন্য লিংক চেষ্টা করুন।';
+            }
+        }
+        
+        // Allow Enter key to trigger download
+        document.getElementById('videoUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                downloadVideo();
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,212 +1,615 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Social Video Downloader</title>
-<style>
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #121212;
-    color: #e0e0e0;
-    text-align: center;
-    padding: 40px 20px;
-    margin: 0;
-}
-.container {
-    max-width: 500px;
-    margin: auto;
-    background: #1e1e1e;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
-h2 {
-    margin-top: 0;
-    color: #fff;
-    font-size: 24px;
-}
-input {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #333;
-    background: #252525;
-    color: #fff;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    font-size: 15px;
-    transition: border 0.3s;
-}
-input:focus {
-    border-color: #00e676;
-    outline: none;
-}
-button.fetch-btn {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 8px;
-    background: #00c853;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.2s;
-}
-button.fetch-btn:hover {
-    background: #00e676;
-}
-.video-box {
-    margin-top: 25px;
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    text-align: left;
-}
-.video-box h3 {
-    font-size: 16px;
-    color: #fff;
-    margin: 5px 0;
-    word-break: break-word;
-}
-.video-box p {
-    color: #aaa;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-video {
-    width: 100%;
-    border-radius: 10px;
-    background: #000;
-    margin-top: 5px;
-}
-.download-btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
-    margin-top: 15px;
-    padding: 14px;
-    background: #2979ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.download-btn:hover {
-    background: #29b6f6;
-}
-.status {
-    margin-top: 20px;
-    font-weight: bold;
-    font-size: 15px;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAGOR // CYBER DOWNLOADER v2.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon: #00ff41;
+      --neon-dim: #00cc33;
+      --bg: #050505;
+      --panel: rgba(0, 15, 5, 0.92);
+      --danger: #ff003c;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--neon);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Matrix Canvas */
+    #matrix {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.12;
+    }
+
+    /* Scanlines */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.15) 2px,
+        rgba(0, 0, 0, 0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 860px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(22px, 5vw, 32px);
+      letter-spacing: 5px;
+      text-shadow: 0 0 12px var(--neon), 0 0 25px var(--neon);
+      margin-bottom: 6px;
+    }
+
+    .version {
+      font-size: 12px;
+      color: var(--neon-dim);
+      letter-spacing: 3px;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-top: 12px;
+      opacity: 0.7;
+      border-top: 1px dashed var(--neon);
+      padding-top: 8px;
+    }
+
+    /* Main Panel */
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--neon);
+      box-shadow: 0 0 25px rgba(0, 255, 65, 0.25),
+                  inset 0 0 30px rgba(0, 255, 65, 0.05);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      animation: scan 4s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Input Area */
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--neon);
+      padding-bottom: 10px;
+    }
+
+    .prompt {
+      color: var(--neon);
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    #urlInput {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--neon);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 15px;
+      outline: none;
+      caret-color: var(--neon);
+    }
+
+    #urlInput::placeholder {
+      color: #004d1a;
+    }
+
+    /* Platform badges */
+    .platforms {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border: 1px solid var(--neon-dim);
+      color: var(--neon-dim);
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+
+    .badge.active {
+      background: var(--neon);
+      color: #000;
+      box-shadow: 0 0 10px var(--neon);
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid var(--neon);
+      color: var(--neon);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      padding: 13px 8px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:hover:not(:disabled) {
+      background: var(--neon);
+      color: #000;
+      box-shadow: 0 0 18px var(--neon);
+    }
+
+    button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    button.danger {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    button.danger:hover:not(:disabled) {
+      background: var(--danger);
+      color: #fff;
+      box-shadow: 0 0 18px var(--danger);
+    }
+
+    /* Terminal Log */
+    .terminal {
+      background: #000;
+      border: 1px solid #003311;
+      padding: 15px;
+      height: 180px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .terminal::-webkit-scrollbar {
+      width: 6px;
+    }
+    .terminal::-webkit-scrollbar-thumb {
+      background: var(--neon);
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+    }
+
+    .log-line.success { color: #00ff41; }
+    .log-line.error { color: #ff003c; }
+    .log-line.info { color: #00ccff; }
+    .log-line.warn { color: #ffcc00; }
+
+    /* Progress */
+    .progress-wrap {
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    .progress-wrap.show {
+      display: block;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: #002211;
+      border: 1px solid var(--neon);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--neon);
+      box-shadow: 0 0 10px var(--neon);
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 11px;
+      margin-top: 6px;
+      text-align: right;
+      opacity: 0.8;
+    }
+
+    /* Result Card */
+    .result-card {
+      display: none;
+      border: 1px solid var(--neon);
+      padding: 18px;
+      background: rgba(0, 30, 10, 0.4);
+      margin-top: 10px;
+    }
+
+    .result-card.show {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-title {
+      font-size: 15px;
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .result-actions a,
+    .result-actions button {
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+      text-decoration: none;
+      padding: 10px;
+      font-size: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 11px;
+      opacity: 0.45;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .btn-row {
+        grid-template-columns: 1fr;
+      }
+      .wrapper {
+        margin: 15px auto;
+        padding: 12px;
+      }
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <canvas id="matrix"></canvas>
 
-<div class="container">
-    <h2>📥 Video Downloader</h2>
-    <input type="text" id="videoUrl" placeholder="Paste Facebook / TikTok / Instagram URL">
-    <button class="fetch-btn" onclick="downloadVideo()">Get Video</button>
-    
-    <div id="result"></div>
-</div>
+  <div class="wrapper">
+    <!-- Header -->
+    <div class="header">
+      <h1>SAGOR // CYBER</h1>
+      <div class="version">VIDEO DOWNLOADER v2.0</div>
+      <div class="status-bar">
+        <span id="sysStatus">SYSTEM: ONLINE</span>
+        <span id="clock"></span>
+      </div>
+    </div>
 
-<script>
-async function downloadVideo() {
-    const url = document.getElementById("videoUrl").value.trim();
-    const result = document.getElementById("result");
+    <!-- Main Panel -->
+    <div class="panel">
+      <!-- Input -->
+      <div class="input-group">
+        <span class="prompt">root@sagor:\~#</span>
+        <input type="text" id="urlInput" placeholder="paste facebook / tiktok / instagram url..." autocomplete="off" spellcheck="false">
+      </div>
 
-    if(!url){
-        alert("Please enter a valid video URL");
-        return;
+      <!-- Platforms -->
+      <div class="platforms">
+        <span class="badge" id="badge-fb">FACEBOOK</span>
+        <span class="badge" id="badge-tt">TIKTOK</span>
+        <span class="badge" id="badge-ig">INSTAGRAM</span>
+        <span class="badge" id="badge-yt">YOUTUBE</span>
+      </div>
+
+      <!-- Buttons -->
+      <div class="btn-row">
+        <button id="btnDownload" onclick="executeDownload()">EXECUTE</button>
+        <button id="btnClear" onclick="clearAll()">CLEAR</button>
+        <button class="danger" onclick="clearLog()">WIPE LOG</button>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0%</div>
+      </div>
+
+      <!-- Terminal Log -->
+      <div class="terminal" id="terminal">
+        <div class="log-line info">> system initialized...</div>
+        <div class="log-line info">> waiting for target url...</div>
+      </div>
+
+      <!-- Result -->
+      <div class="result-card" id="resultCard">
+        <div class="result-title" id="resultTitle"></div>
+        <div class="result-actions">
+          <a id="downloadLink" href="#" target="_blank" download>↓ DOWNLOAD</a>
+          <button onclick="copyLink()">COPY LINK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      // powered by sagor-video-downloader • educational purpose only
+    </div>
+  </div>
+
+  <script>
+    // ====================== MATRIX RAIN ======================
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    let width, height, columns, drops;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      columns = Math.floor(width / 16);
+      drops = Array(columns).fill(1);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(5, 5, 5, 0.08)';
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = '#00ff41';
+      ctx.font = '14px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * 16, drops[i] * 16);
+        if (drops[i] * 16 > height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 35);
+
+    // ====================== CLOCK ======================
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ====================== TERMINAL LOG ======================
+    const terminal = document.getElementById('terminal');
+
+    function log(msg, type = 'info') {
+      const line = document.createElement('div');
+      line.className = `log-line ${type}`;
+      line.textContent = `> ${msg}`;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
     }
 
-    result.innerHTML = "<div class='status'>⏳ Fetching video data...</div>";
+    function clearLog() {
+      terminal.innerHTML = '<div class="log-line info">> log wiped...</div>';
+    }
 
-    try {
-        // Dynamic Universal API Endpoint
-        const api = `https://api.vytal.my.id/download?url=${encodeURIComponent(url)}`;
+    // ====================== PLATFORM DETECT ======================
+    function detectPlatform(url) {
+      const badges = {
+        fb: document.getElementById('badge-fb'),
+        tt: document.getElementById('badge-tt'),
+        ig: document.getElementById('badge-ig'),
+        yt: document.getElementById('badge-yt')
+      };
+      Object.values(badges).forEach(b => b.classList.remove('active'));
 
-        const res = await fetch(api);
-        
-        if (!res.ok) {
-            throw new Error("Server error");
-        }
-        
+      if (/facebook\.com|fb\.watch|fb\.com/i.test(url)) {
+        badges.fb.classList.add('active');
+        return 'Facebook';
+      }
+      if (/tiktok\.com|vm\.tiktok/i.test(url)) {
+        badges.tt.classList.add('active');
+        return 'TikTok';
+      }
+      if (/instagram\.com|instagr\.am/i.test(url)) {
+        badges.ig.classList.add('active');
+        return 'Instagram';
+      }
+      if (/youtube\.com|youtu\.be/i.test(url)) {
+        badges.yt.classList.add('active');
+        return 'YouTube';
+      }
+      return null;
+    }
+
+    document.getElementById('urlInput').addEventListener('input', (e) => {
+      detectPlatform(e.target.value);
+    });
+
+    // ====================== PROGRESS ======================
+    function setProgress(percent) {
+      const wrap = document.getElementById('progressWrap');
+      const fill = document.getElementById('progressFill');
+      const text = document.getElementById('progressText');
+      wrap.classList.add('show');
+      fill.style.width = percent + '%';
+      text.textContent = percent + '%';
+    }
+
+    function hideProgress() {
+      document.getElementById('progressWrap').classList.remove('show');
+      document.getElementById('progressFill').style.width = '0%';
+    }
+
+    // ====================== MAIN DOWNLOAD ======================
+    async function executeDownload() {
+      const url = document.getElementById('urlInput').value.trim();
+      const btn = document.getElementById('btnDownload');
+      const resultCard = document.getElementById('resultCard');
+
+      if (!url) {
+        log('error: no url provided', 'error');
+        return;
+      }
+
+      const platform = detectPlatform(url);
+      if (!platform) {
+        log('warning: unknown platform, trying anyway...', 'warn');
+      } else {
+        log(`target platform detected → ${platform}`, 'success');
+      }
+
+      btn.disabled = true;
+      resultCard.classList.remove('show');
+      hideProgress();
+
+      log('establishing connection to sagor core...', 'info');
+      setProgress(15);
+
+      // Simulated steps (real backend call নিচে)
+      await delay(600);
+      log('authenticating module...', 'info');
+      setProgress(35);
+
+      await delay(500);
+      log('extracting media stream...', 'info');
+      setProgress(60);
+
+      try {
+        // ========== BACKEND CALL ==========
+        // তোমার Node.js server চালু থাকতে হবে
+        const res = await fetch('http://localhost:3000/download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+
+        setProgress(85);
         const data = await res.json();
 
-        // Dynamic properties handler
-        const video = data.result?.videoUrl || data.result?.hd || data.result?.url || data.result?.sd;
-        const title = data.result?.title || "Social Video";
-        const platform = data.result?.source || "Social Media";
+        if (data.success) {
+          setProgress(100);
+          log('download link acquired successfully ✓', 'success');
+          log(`title: ${data.title || 'Unknown'}`, 'info');
 
-        if(!video){
-            result.innerHTML = "<div class='status' style='color:#ff5252;'>❌ Video not found or Link invalid!</div>";
-            return;
+          document.getElementById('resultTitle').textContent = data.title || 'Video Ready';
+          document.getElementById('downloadLink').href = data.videoUrl;
+          resultCard.classList.add('show');
+        } else {
+          log(`failed → ${data.message || 'unknown error'}`, 'error');
+          hideProgress();
         }
-
-        result.innerHTML = `
-        <div class="video-box">
-            <h3>📝 ${title}</h3>
-            <p>📌 Platform: <strong>${platform.toUpperCase()}</strong></p>
-
-            <video controls autoplay id="mainPlayer">
-                <source src="${video}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            
-            <button class="download-btn" onclick="forceDownload('${video}', '${title}')">
-               ⬇ Download Video Directly
-            </button>
-        </div>
-        `;
-        
-        // Caching block clear dynamically
-        document.getElementById("mainPlayer")?.load();
-
-    } catch(err){
+      } catch (err) {
+        log('connection refused. is backend running on :3000 ?', 'error');
+        log('tip: node server.js চালাও', 'warn');
+        hideProgress();
         console.error(err);
-        result.innerHTML = "<div class='status' style='color:#ff5252;'>❌ API Server Error! Try another link.</div>";
+      }
+
+      btn.disabled = false;
     }
-}
 
-// Custom function ensuring direct downloads bypassing modern browser CORS blockages
-async function forceDownload(videoUrl, filename) {
-    try {
-        const btn = document.querySelector('.download-btn');
-        const originalText = btn.innerText;
-        btn.innerText = "⏳ Downloading...";
-        btn.style.pointerEvents = "none";
-
-        const response = await fetch(videoUrl);
-        const blob = await response.blob();
-        const blobUrl = window.URL.createObjectURL(blob);
-        
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = `${filename.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.mp4`;
-        document.body.appendChild(a);
-        a.click();
-        
-        // Clean temporary resources
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(blobUrl);
-        
-        btn.innerText = originalText;
-        btn.style.pointerEvents = "auto";
-    } catch (error) {
-        // Fallback strategy if blob fetch is natively protected
-        window.open(videoUrl, '_blank');
-        const btn = document.querySelector('.download-btn');
-        btn.innerText = "⬇ Download Video Directly";
-        btn.style.pointerEvents = "auto";
+    function delay(ms) {
+      return new Promise(r => setTimeout(r, ms));
     }
-}
-</script>
 
+    function clearAll() {
+      document.getElementById('urlInput').value = '';
+      document.getElementById('resultCard').classList.remove('show');
+      hideProgress();
+      document.querySelectorAll('.badge').forEach(b => b.classList.remove('active'));
+      log('input cleared', 'info');
+    }
+
+    function copyLink() {
+      const link = document.getElementById('downloadLink').href;
+      if (!link || link === '#') return;
+      navigator.clipboard.writeText(link).then(() => {
+        log('download link copied to clipboard', 'success');
+      });
+    }
+
+    // Enter key
+    document.getElementById('urlInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') executeDownload();
+    });
+
+    // Initial log
+    setTimeout(() => {
+      log('modules loaded: facebook • tiktok • instagram', 'success');
+      log('ready for input...', 'info');
+    }, 800);
+  </script>
 </body>
 </html>
